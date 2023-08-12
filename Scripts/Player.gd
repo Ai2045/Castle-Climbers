@@ -23,12 +23,12 @@ func horizontal_movement():
 
 func player_animations():
 	
-	if Input.is_action_pressed("ui_left") || Input.is_action_just_released("ui_jump"):
+	if Input.is_action_pressed("ui_left") && Global.is_jumping == false:
 		player_sprite.flip_h = true
 		player_sprite.play("run")
 		player_collisionShape.position.x = 7
 		
-	if Input.is_action_pressed("ui_right") || Input.is_action_just_released("ui_jump"):
+	if Input.is_action_pressed("ui_right") && Global.is_jumping == false:
 		player_sprite.flip_h = false
 		player_sprite.play("run")
 		player_collisionShape.position.x = -7
@@ -53,6 +53,12 @@ func _input(event):
 			player_sprite.play("climb")
 			gravity = 100
 			velocity.y = -160
+			Global.is_jumping = false
+			
+	else:
+			gravity = 200
+			Global.is_climbing = false  
+			Global.is_jumping = false
 
 func _on_animated_sprite_2d_animation_finished():
 	Global.is_attacking = false
