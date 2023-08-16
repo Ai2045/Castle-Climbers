@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://wlaphpxiadmo"]
+
+[ext_resource type="Texture2D" uid="uid://chcj1yvbhw63d" path="res://Assets/Kings and Pigs/Sprites/10-Cannon/Shoot (44x28).png" id="1_2gvhv"]
+[ext_resource type="Script" path="res://Scenes/Bomb_spawner.gd" id="1_sgxuy"]
+[ext_resource type="Texture2D" uid="uid://01kyoh03sgx3" path="res://Assets/Kings and Pigs/Sprites/10-Cannon/Idle.png" id="2_5k2v8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpjgl"]
+atlas = ExtResource("1_2gvhv")
+region = Rect2(0, 0, 44, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gfyn"]
+atlas = ExtResource("1_2gvhv")
+region = Rect2(44, 0, 44, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_274ad"]
+atlas = ExtResource("1_2gvhv")
+region = Rect2(88, 0, 44, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yy4ot"]
+atlas = ExtResource("1_2gvhv")
+region = Rect2(132, 0, 44, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xravq"]
+atlas = ExtResource("1_2gvhv")
+region = Rect2(0, 0, 44, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wi354"]
+atlas = ExtResource("2_5k2v8")
+region = Rect2(0, 0, 44, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ta3rw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpjgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5gfyn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_274ad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yy4ot")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xravq")
+}],
+"loop": false,
+"name": &"cannon_fired",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wi354")
+}],
+"loop": true,
+"name": &"cannon_idle",
+"speed": 5.0
+}]
+
+[node name="BombSpawner" type="Node2D" node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("1_sgxuy")
+animated_sprite = NodePath("AnimatedSprite2D")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ta3rw")
+animation = &"cannon_fired"
+flip_h = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
