@@ -88,6 +88,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kq0mx"]
+radius = 8.06226
 
 [node name="Bomb" type="Area2D" node_paths=PackedStringArray("sprite_animated", "timer")]
 script = ExtResource("1_40cfr")

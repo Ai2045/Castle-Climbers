@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://duomtukxcksgh"]
+[gd_scene load_steps=51 format=3 uid="uid://duomtukxcksgh"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_o4idn"]
 [ext_resource type="Texture2D" uid="uid://1kw8i7c600wg" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Attack (78x58).png" id="2_yd10t"]
@@ -309,10 +309,50 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape")]
+[sub_resource type="Animation" id="Animation_7f7lw"]
+resource_name = "move_left"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OffsetCamera:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(100, -50), Vector2(-100, -50)]
+}
+
+[sub_resource type="Animation" id="Animation_vogpg"]
+resource_name = "move_right"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OffsetCamera:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-100, -50), Vector2(100, -50)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vaajo"]
+_data = {
+"move_left": SubResource("Animation_7f7lw"),
+"move_right": SubResource("Animation_vogpg")
+}
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera")]
 script = ExtResource("1_o4idn")
 player_sprite = NodePath("AnimatedSprite2D")
 player_collisionShape = NodePath("CollisionShape2D")
+animation_player = NodePath("AnimationPlayer")
+offset_camera = NodePath("OffsetCamera")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 0.5)
@@ -321,5 +361,24 @@ shape = SubResource("RectangleShape2D_guxkt")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0xd8b")
 animation = &"death"
+
+[node name="FixedCamera" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 656
+
+[node name="OffsetCamera" type="Camera2D" parent="."]
+offset = Vector2(-100, -50)
+enabled = false
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vaajo")
+}
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

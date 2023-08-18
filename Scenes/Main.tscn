@@ -1,11 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bji1kow1rrrkv"]
+[gd_scene load_steps=14 format=3 uid="uid://bji1kow1rrrkv"]
 
 [ext_resource type="PackedScene" uid="uid://duomtukxcksgh" path="res://Scenes/Player.tscn" id="1_45st0"]
 [ext_resource type="Texture2D" uid="uid://sufk471liay6" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Decorations (32x32).png" id="2_3465a"]
 [ext_resource type="Texture2D" uid="uid://1bdvd6pt2ktd" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Terrain (32x32).png" id="2_hsvy5"]
 [ext_resource type="PackedScene" uid="uid://c77m4sxupah75" path="res://Scenes/Ladder.tscn" id="3_fmygm"]
 [ext_resource type="PackedScene" uid="uid://bub008n65aq7s" path="res://Scenes/Platform.tscn" id="4_11jpe"]
-[ext_resource type="PackedScene" uid="uid://unjydmjdqwt1" path="res://Scenes/Bomb.tscn" id="6_udyt1"]
 [ext_resource type="PackedScene" uid="uid://wlaphpxiadmo" path="res://Scenes/Bomb_spawner.tscn" id="7_0lx8w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nv76t"]
@@ -1998,25 +1997,9 @@ sources/1 = SubResource("TileSetAtlasSource_g8645")
 
 [sub_resource type="Curve2D" id="Curve2D_pejp3"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 100, 150, 0, 0, 0, 0, 550, 150, 0, 0, 0, 0, 550, 240, 0, 0, 0, 0, 340, 240, 0, 0, 0, 0, 340, 340, 0, 0, 0, 0, 80, 340, 0, 0, 0, 0, 80, 425, 0, 0, 0, 0, 200, 425, 0, 0, 0, 0, 200, 510, 0, 0, 0, 0, 1060, 510, 0, 0, 0, 0, 1060, 620, 0, 0, 0, 0, 0, 620)
+"points": PackedVector2Array(0, 0, 0, 0, 120, 165, 0, 0, 0, 0, 550, 165, 0, 0, 0, 0, 550, 240, 0, 0, 0, 0, 340, 240, 0, 0, 0, 0, 340, 340, 0, 0, 0, 0, 80, 340, 0, 0, 0, 0, 80, 425, 0, 0, 0, 0, 200, 425, 0, 0, 0, 0, 200, 510, 0, 0, 0, 0, 1060, 510, 0, 0, 0, 0, 1060, 620, 0, 0, 0, 0, 0, 620)
 }
 point_count = 12
-
-[sub_resource type="Animation" id="Animation_8n2ex"]
-resource_name = "bomb_movement"
-length = 5.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PathFollow2D:progress_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
 
 [sub_resource type="Animation" id="Animation_58v63"]
 length = 0.001
@@ -2031,6 +2014,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8n2ex"]
+resource_name = "bomb_movement"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_35u35"]
@@ -2125,19 +2124,13 @@ movement_speed = 70.0
 
 [node name="Bombs" type="Node2D" parent="."]
 
-[node name="Bomb" parent="Bombs" instance=ExtResource("6_udyt1")]
-position = Vector2(374, 613)
-
-[node name="Bomb2" parent="Bombs" instance=ExtResource("6_udyt1")]
-position = Vector2(633, 611)
-
 [node name="BombPath" type="Node2D" parent="."]
 
 [node name="Path2D" type="Path2D" parent="BombPath"]
 curve = SubResource("Curve2D_pejp3")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="BombPath/Path2D"]
-position = Vector2(100, 150)
+position = Vector2(120, 165)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="BombPath/Path2D"]
 libraries = {
@@ -2145,4 +2138,4 @@ libraries = {
 }
 
 [node name="BombSpawner" parent="." instance=ExtResource("7_0lx8w")]
-position = Vector2(93, 152)
+position = Vector2(113, 167)

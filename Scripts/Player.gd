@@ -3,10 +3,18 @@ extends CharacterBody2D
 @export var speed = 100
 @export var gravity = 200
 @export var jump_height = -100
+
+var last_direction = 0
+var current_direction = 0
+
 @export var player_sprite: AnimatedSprite2D
 @export var player_collisionShape: CollisionShape2D
+@export var animation_player: AnimationPlayer
+@export var offset_camera: Camera2D
 
-
+func _ready():
+	current_direction = -1
+	
 func _physics_process(delta):
 	
 	velocity.y += gravity * delta
@@ -63,3 +71,29 @@ func _input(event):
 func _on_animated_sprite_2d_animation_finished():
 	Global.is_attacking = false
 	Global.is_climbing = false
+
+func _process(delta):
+	if velocity.x > 0:
+		current_direction = 1
+	elif velocity.x < 0:
+		current_direction = -1
+	
+	if current_direction != last_direction:
+		if current_direction == 1:
+			animation_player.play("move_right")
+			
+			offset_camera.limit_left = -110
+			offset_camera.limit_bottom = 705
+			offset_camera.limit_top = 40
+			offset_camera.limit_right = 1068
+			
+		elif current_direction == -1:
+			animation_player.play("move_left")
+			
+			offset_camera.limit_left = 90
+			offset_camera.limit_bottom = 705
+			offset_camera.limit_top = 40
+			offset_camera.limit_right = 1268
+			
+		last_direction = current_direction
+			
