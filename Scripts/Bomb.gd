@@ -16,6 +16,8 @@ func _on_body_entered(body):
 		sprite_animated.play("explode")
 		timer.start()
 		Global.is_bomb_moving = false
+		
+		body.take_damage()
 	
 	if body.name == "Level" and ! body.name.begins_with("Platform"):
 		sprite_animated.play("explode")

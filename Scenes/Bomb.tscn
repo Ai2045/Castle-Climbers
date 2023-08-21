@@ -1,6 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://unjydmjdqwt1"]
+[gd_scene load_steps=16 format=3 uid="uid://cg1ssrhnudoea"]
 
-[ext_resource type="Script" path="res://Bomb.gd" id="1_40cfr"]
+[ext_resource type="Script" path="res://Scripts/Bomb.gd" id="1_qsiqf"]
 [ext_resource type="Texture2D" uid="uid://bmi3x00qiohuv" path="res://Assets/Kings and Pigs/Sprites/09-Bomb/Boooooom (52x56).png" id="2_w3mr7"]
 [ext_resource type="Texture2D" uid="uid://ccha35pmbi78h" path="res://Assets/Kings and Pigs/Sprites/09-Bomb/Bomb On (52x56).png" id="3_pgvor"]
 
@@ -91,7 +91,7 @@ animations = [{
 radius = 8.06226
 
 [node name="Bomb" type="Area2D" node_paths=PackedStringArray("sprite_animated", "timer")]
-script = ExtResource("1_40cfr")
+script = ExtResource("1_qsiqf")
 sprite_animated = NodePath("AnimatedSprite2D")
 timer = NodePath("Timer")
 

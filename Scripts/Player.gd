@@ -1,8 +1,12 @@
 extends CharacterBody2D
 
+signal update_lives(lives, max_lives)
+
+@export var max_lives = 3
+@export var lives = 3
 @export var speed = 100
 @export var gravity = 200
-@export var jump_height = -100
+@export var jump_height = -150
 
 var last_direction = 0
 var current_direction = 0
@@ -11,10 +15,14 @@ var current_direction = 0
 @export var player_collisionShape: CollisionShape2D
 @export var animation_player: AnimationPlayer
 @export var offset_camera: Camera2D
+@export var health: ColorRect
+@export var health_label: Label
 
 func _ready():
 	current_direction = -1
 	
+	update_lives.connect(health.update_lives)
+	health_label.text = str(lives)
 func _physics_process(delta):
 	
 	velocity.y += gravity * delta
@@ -71,6 +79,7 @@ func _input(event):
 func _on_animated_sprite_2d_animation_finished():
 	Global.is_attacking = false
 	Global.is_climbing = false
+	set_physics_process(true)
 
 func _process(delta):
 	if velocity.x > 0:
@@ -97,3 +106,26 @@ func _process(delta):
 			
 		last_direction = current_direction
 			
+
+func take_damage():
+	if lives > 0:
+		lives = lives -1
+		update_lives.emit(lives, max_lives)
+		print(lives)
+		player_sprite.play("damage")
+		set_physics_process(false)
+
+func add_pickup(pickup):
+	if pickup == Global.Pickups.HEALTH:
+		if lives < max_lives:
+			lives += 1
+			update_lives.emit(lives, max_lives)
+			print(lives)
+			
+		if pickup == Global.Pickups.ATTACK:
+			pass
+		
+		if pickup == Global.Pickups.SCORE:
+			pass
+			
+		

@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://dw0ymi478h82j"]
+
+[ext_resource type="Script" path="res://Scripts/Box.gd" id="1_lkt6o"]
+[ext_resource type="Texture2D" uid="uid://bcb10ey5ggvu2" path="res://Assets/Kings and Pigs/Sprites/08-Box/Hit.png" id="2_gnjhw"]
+[ext_resource type="Texture2D" uid="uid://cwb88dltum2ut" path="res://Assets/Kings and Pigs/Sprites/08-Box/Idle.png" id="3_th0tn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgc7m"]
+atlas = ExtResource("2_gnjhw")
+region = Rect2(0, 0, 22, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_goam1"]
+atlas = ExtResource("3_th0tn")
+region = Rect2(0, 0, 22, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_go865"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgc7m")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_goam1")
+}],
+"loop": false,
+"name": &"moving",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxce3"]
+size = Vector2(21, 16)
+
+[node name="Box" type="Area2D" node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("1_lkt6o")
+animated_sprite = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_go865")
+animation = &"explode"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_fxce3")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvly2sehkl7hx"]
+
+[ext_resource type="Script" path="res://Scripts/Pickup.gd" id="1_1hubw"]
+[ext_resource type="Texture2D" uid="uid://daomqyb4fg30b" path="res://Assets/heart/heart/sprite_4.png" id="2_kub14"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7ewnf"]
+
+[node name="Pickup" type="Area2D" node_paths=PackedStringArray("pickup_texture")]
+script = ExtResource("1_1hubw")
+pickup_texture = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4, -2)
+texture = ExtResource("2_kub14")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7ewnf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,11 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://bji1kow1rrrkv"]
+[gd_scene load_steps=16 format=3 uid="uid://o6ct3knf8hc6"]
 
 [ext_resource type="PackedScene" uid="uid://duomtukxcksgh" path="res://Scenes/Player.tscn" id="1_45st0"]
 [ext_resource type="Texture2D" uid="uid://sufk471liay6" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Decorations (32x32).png" id="2_3465a"]
 [ext_resource type="Texture2D" uid="uid://1bdvd6pt2ktd" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Terrain (32x32).png" id="2_hsvy5"]
 [ext_resource type="PackedScene" uid="uid://c77m4sxupah75" path="res://Scenes/Ladder.tscn" id="3_fmygm"]
 [ext_resource type="PackedScene" uid="uid://bub008n65aq7s" path="res://Scenes/Platform.tscn" id="4_11jpe"]
-[ext_resource type="PackedScene" uid="uid://wlaphpxiadmo" path="res://Scenes/Bomb_spawner.tscn" id="7_0lx8w"]
+[ext_resource type="PackedScene" uid="uid://b20bmiuiv1bf4" path="res://Scenes/BombSpawner.tscn" id="6_420cb"]
+[ext_resource type="PackedScene" uid="uid://dl0mbqinutbef" path="res://Scenes/BoxSpawner.tscn" id="7_d80re"]
+[ext_resource type="PackedScene" uid="uid://cvly2sehkl7hx" path="res://Scenes/Pickup.tscn" id="8_k68ce"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nv76t"]
 texture = ExtResource("2_hsvy5")
@@ -1997,9 +1999,9 @@ sources/1 = SubResource("TileSetAtlasSource_g8645")
 
 [sub_resource type="Curve2D" id="Curve2D_pejp3"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 120, 165, 0, 0, 0, 0, 550, 165, 0, 0, 0, 0, 550, 240, 0, 0, 0, 0, 340, 240, 0, 0, 0, 0, 340, 340, 0, 0, 0, 0, 80, 340, 0, 0, 0, 0, 80, 425, 0, 0, 0, 0, 200, 425, 0, 0, 0, 0, 200, 510, 0, 0, 0, 0, 1060, 510, 0, 0, 0, 0, 1060, 620, 0, 0, 0, 0, 0, 620)
+"points": PackedVector2Array(0, 0, 0, 0, 120, 165, 0, 0, 0, 0, 550, 165, 0, 0, 0, 0, 550, 260, 0, 0, 0, 0, 490, 260, 0, 0, 0, 0, 490, 260, 0, 0, 0, 0, 340, 260, 0, 0, 0, 0, 340, 350, 0, 0, 0, 0, 80, 350, 0, 0, 0, 0, 80, 435, 0, 0, 0, 0, 200, 435, 0, 0, 0, 0, 200, 530, 0, 0, 0, 0, 1060, 530, 0, 0, 0, 0, 1060, 630, 0, 0, 0, 0, 0, 630)
 }
-point_count = 12
+point_count = 14
 
 [sub_resource type="Animation" id="Animation_58v63"]
 length = 0.001
@@ -2137,5 +2139,29 @@ libraries = {
 "": SubResource("AnimationLibrary_35u35")
 }
 
-[node name="BombSpawner" parent="." instance=ExtResource("7_0lx8w")]
-position = Vector2(113, 167)
+[node name="BombSpawner" parent="." instance=ExtResource("6_420cb")]
+position = Vector2(107, 167)
+
+[node name="BoxSpawners" type="Node2D" parent="."]
+
+[node name="BombSpawner" parent="BoxSpawners" instance=ExtResource("7_d80re")]
+position = Vector2(31, 257)
+
+[node name="BombSpawner2" parent="BoxSpawners" instance=ExtResource("7_d80re")]
+position = Vector2(31, 353)
+
+[node name="BombSpawner2" parent="." instance=ExtResource("7_d80re")]
+position = Vector2(1094, 430)
+rotation = -3.14159
+flip_h = true
+flip_v = true
+
+[node name="Pickups" type="Node2D" parent="."]
+
+[node name="Pickup" parent="Pickups" instance=ExtResource("8_k68ce")]
+position = Vector2(228, 619)
+pickup = 0
+
+[node name="Pickup2" parent="Pickups" instance=ExtResource("8_k68ce")]
+position = Vector2(531, 527)
+pickup = 1

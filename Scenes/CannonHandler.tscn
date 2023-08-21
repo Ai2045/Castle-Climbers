@@ -1,6 +1,6 @@
-[gd_scene load_steps=24 format=3 uid="uid://r52qnttrr8c2"]
+[gd_scene load_steps=24 format=3 uid="uid://df6w557lkpyd0"]
 
-[ext_resource type="Script" path="res://Scenes/CannonHandler.gd" id="1_veo7q"]
+[ext_resource type="Script" path="res://Scripts/CannonHandler.gd" id="1_qwtoo"]
 [ext_resource type="Texture2D" uid="uid://cgq1sw7aap4hc" path="res://Assets/Kings and Pigs/Sprites/07-Pig With a Match/Match On (26x18).png" id="2_s0g35"]
 [ext_resource type="Texture2D" uid="uid://dfqi331eywtk4" path="res://Assets/Kings and Pigs/Sprites/07-Pig With a Match/Lighting the Match (26x18).png" id="3_rrei1"]
 [ext_resource type="Texture2D" uid="uid://bhb4a6t31dmps" path="res://Assets/Kings and Pigs/Sprites/13-Dialogue Boxes/Boom In (24x8).png" id="4_5poj7"]
@@ -144,7 +144,7 @@ animations = [{
 }]
 
 [node name="CannonHandler" type="Node2D" node_paths=PackedStringArray("body", "speech_bubble", "timer")]
-script = ExtResource("1_veo7q")
+script = ExtResource("1_qwtoo")
 body = NodePath("Body")
 speech_bubble = NodePath("SpeechBubble")
 timer = NodePath("Timer")

@@ -1,32 +1,32 @@
-[gd_scene load_steps=12 format=3 uid="uid://wlaphpxiadmo"]
+[gd_scene load_steps=13 format=3 uid="uid://b20bmiuiv1bf4"]
 
-[ext_resource type="Texture2D" uid="uid://chcj1yvbhw63d" path="res://Assets/Kings and Pigs/Sprites/10-Cannon/Shoot (44x28).png" id="1_2gvhv"]
-[ext_resource type="Script" path="res://Scenes/Bomb_spawner.gd" id="1_sgxuy"]
-[ext_resource type="Texture2D" uid="uid://01kyoh03sgx3" path="res://Assets/Kings and Pigs/Sprites/10-Cannon/Idle.png" id="2_5k2v8"]
-[ext_resource type="PackedScene" uid="uid://r52qnttrr8c2" path="res://Scenes/CannonHandler.tscn" id="4_l54m6"]
+[ext_resource type="Script" path="res://Scripts/BombSpawner.gd" id="1_aj1w0"]
+[ext_resource type="Texture2D" uid="uid://chcj1yvbhw63d" path="res://Assets/Kings and Pigs/Sprites/10-Cannon/Shoot (44x28).png" id="2_yua73"]
+[ext_resource type="Texture2D" uid="uid://01kyoh03sgx3" path="res://Assets/Kings and Pigs/Sprites/10-Cannon/Idle.png" id="3_nqc20"]
+[ext_resource type="PackedScene" uid="uid://df6w557lkpyd0" path="res://Scenes/CannonHandler.tscn" id="4_mtmyn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cpjgl"]
-atlas = ExtResource("1_2gvhv")
+atlas = ExtResource("2_yua73")
 region = Rect2(0, 0, 44, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5gfyn"]
-atlas = ExtResource("1_2gvhv")
+atlas = ExtResource("2_yua73")
 region = Rect2(44, 0, 44, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_274ad"]
-atlas = ExtResource("1_2gvhv")
+atlas = ExtResource("2_yua73")
 region = Rect2(88, 0, 44, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yy4ot"]
-atlas = ExtResource("1_2gvhv")
+atlas = ExtResource("2_yua73")
 region = Rect2(132, 0, 44, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xravq"]
-atlas = ExtResource("1_2gvhv")
+atlas = ExtResource("2_yua73")
 region = Rect2(0, 0, 44, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wi354"]
-atlas = ExtResource("2_5k2v8")
+atlas = ExtResource("3_nqc20")
 region = Rect2(0, 0, 44, 28)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ta3rw"]
@@ -60,8 +60,11 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jy1xm"]
+size = Vector2(57, 27)
+
 [node name="BombSpawner" type="Node2D" node_paths=PackedStringArray("animated_sprite")]
-script = ExtResource("1_sgxuy")
+script = ExtResource("1_aj1w0")
 animated_sprite = NodePath("AnimatedSprite2D")
 
 [node name="Timer" type="Timer" parent="."]
@@ -72,7 +75,13 @@ sprite_frames = SubResource("SpriteFrames_ta3rw")
 animation = &"cannon_fired"
 flip_h = true
 
-[node name="CannonHandler" parent="." instance=ExtResource("4_l54m6")]
+[node name="CannonHandler" parent="." instance=ExtResource("4_mtmyn")]
 position = Vector2(-39, -4)
+
+[node name="Collisions" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collisions"]
+position = Vector2(-26, -3.5)
+shape = SubResource("RectangleShape2D_jy1xm")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

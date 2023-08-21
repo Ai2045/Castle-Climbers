@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://duomtukxcksgh"]
+[gd_scene load_steps=54 format=3 uid="uid://duomtukxcksgh"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_o4idn"]
 [ext_resource type="Texture2D" uid="uid://1kw8i7c600wg" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Attack (78x58).png" id="2_yd10t"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://dohiy8rd7cjxm" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Idle (78x58).png" id="6_roq2o"]
 [ext_resource type="Texture2D" uid="uid://dqd5ud37rnsns" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Jump (78x58).png" id="7_3u30g"]
 [ext_resource type="Texture2D" uid="uid://c5j00wy2rk72v" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Run (78x58).png" id="8_2sk7p"]
+[ext_resource type="Script" path="res://GUI/Health.gd" id="9_ujnra"]
+[ext_resource type="Texture2D" uid="uid://daomqyb4fg30b" path="res://Assets/heart/heart/sprite_4.png" id="10_xta6a"]
+[ext_resource type="FontFile" uid="uid://6t41kx6p1hri" path="res://Assets/Font/QuinqueFive.otf" id="11_ffb61"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guxkt"]
 size = Vector2(21, 23)
@@ -56,6 +59,14 @@ region = Rect2(468, 0, 78, 58)
 atlas = ExtResource("3_4espk")
 region = Rect2(546, 0, 78, 58)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_aokie"]
+atlas = ExtResource("5_2kv4u")
+region = Rect2(0, 0, 78, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ugri"]
+atlas = ExtResource("5_2kv4u")
+region = Rect2(78, 0, 78, 58)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_o65k6"]
 atlas = ExtResource("4_u0n8o")
 region = Rect2(0, 0, 78, 58)
@@ -71,14 +82,6 @@ region = Rect2(156, 0, 78, 58)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ey6rs"]
 atlas = ExtResource("4_u0n8o")
 region = Rect2(234, 0, 78, 58)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_aokie"]
-atlas = ExtResource("5_2kv4u")
-region = Rect2(0, 0, 78, 58)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5ugri"]
-atlas = ExtResource("5_2kv4u")
-region = Rect2(78, 0, 78, 58)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rrfgy"]
 atlas = ExtResource("6_roq2o")
@@ -207,6 +210,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_aokie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ugri")
+}],
+"loop": false,
+"name": &"damage",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_o65k6")
 }, {
 "duration": 1.0,
@@ -221,17 +235,6 @@ animations = [{
 "loop": false,
 "name": &"death",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_aokie")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5ugri")
-}],
-"loop": false,
-"name": &"demage",
-"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -347,12 +350,15 @@ _data = {
 "move_right": SubResource("Animation_vogpg")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label")]
 script = ExtResource("1_o4idn")
+jump_height = -130
 player_sprite = NodePath("AnimatedSprite2D")
 player_collisionShape = NodePath("CollisionShape2D")
 animation_player = NodePath("AnimationPlayer")
 offset_camera = NodePath("OffsetCamera")
+health = NodePath("UI/Health")
+health_label = NodePath("UI/Health/Label")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 0.5)
@@ -360,7 +366,7 @@ shape = SubResource("RectangleShape2D_guxkt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0xd8b")
-animation = &"death"
+animation = &"idle"
 
 [node name="FixedCamera" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
@@ -380,5 +386,38 @@ position_smoothing_speed = 2.0
 libraries = {
 "": SubResource("AnimationLibrary_vaajo")
 }
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Health" type="ColorRect" parent="UI" node_paths=PackedStringArray("label")]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 122.0
+offset_bottom = 60.0
+color = Color(0.172549, 0.172549, 0.172549, 0.407843)
+script = ExtResource("9_ujnra")
+label = NodePath("Label")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/Health"]
+position = Vector2(30, 17)
+texture = ExtResource("10_xta6a")
+
+[node name="Label" type="Label" parent="UI/Health"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "0"
+vertical_alignment = 1
+uppercase = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

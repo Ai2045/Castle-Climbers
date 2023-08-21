@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://bmmaes3tiqrv0"]
+[gd_scene load_steps=14 format=3 uid="uid://bmmaes3tiqrv0"]
 
 [ext_resource type="Texture2D" uid="uid://1bdvd6pt2ktd" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Terrain (32x32).png" id="1_fk44x"]
 [ext_resource type="Texture2D" uid="uid://sufk471liay6" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Decorations (32x32).png" id="2_ke7gn"]
 [ext_resource type="PackedScene" uid="uid://c77m4sxupah75" path="res://Scenes/Ladder.tscn" id="3_ymk0i"]
 [ext_resource type="PackedScene" uid="uid://duomtukxcksgh" path="res://Scenes/Player.tscn" id="4_3bjdg"]
+[ext_resource type="PackedScene" uid="uid://b20bmiuiv1bf4" path="res://Scenes/BombSpawner.tscn" id="5_xfvnf"]
+[ext_resource type="PackedScene" uid="uid://dl0mbqinutbef" path="res://Scenes/BoxSpawner.tscn" id="6_pdxww"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nv76t"]
 texture = ExtResource("1_fk44x")
@@ -1995,7 +1997,7 @@ sources/1 = SubResource("TileSetAtlasSource_g8645")
 
 [sub_resource type="Curve2D" id="Curve2D_u54tq"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 100, 150, 0, 0, 0, 0, 750, 150, 0, 0, 0, 0, 750, 230, 0, 0, 0, 0, 820, 230, 0, 0, 0, 0, 820, 330, 0, 0, 0, 0, 950, 330, 0, 0, 0, 0, 950, 430, 0, 0, 0, 0, 200, 430, 0, 0, 0, 0, 200, 510, 0, 0, 0, 0, 780, 510, 0, 0, 0, 0, 780, 610, 0, 0, 0, 0, 0, 610)
+"points": PackedVector2Array(0, 0, 0, 0, 100, 160, 0, 0, 0, 0, 750, 160, 0, 0, 0, 0, 750, 230, 0, 0, 0, 0, 820, 230, 0, 0, 0, 0, 820, 355, 0, 0, 0, 0, 950, 355, 0, 0, 0, 0, 950, 450, 0, 0, 0, 0, 200, 450, 0, 0, 0, 0, 200, 530, 0, 0, 0, 0, 780, 530, 0, 0, 0, 0, 780, 625, 0, 0, 0, 0, 0, 625)
 }
 point_count = 12
 
@@ -2110,9 +2112,38 @@ position = Vector2(119, 615)
 curve = SubResource("Curve2D_u54tq")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="BombPath/Path2D"]
-position = Vector2(100, 150)
+position = Vector2(100, 160)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="BombPath/Path2D"]
 libraries = {
 "": SubResource("AnimationLibrary_35u35")
 }
+
+[node name="BombSpawner" parent="." instance=ExtResource("5_xfvnf")]
+position = Vector2(74, 162)
+
+[node name="BoxSpawners" type="Node2D" parent="."]
+
+[node name="BombSpawner2" parent="BoxSpawners" node_paths=PackedStringArray("box_path", "box_animation", "animated_sprite") instance=ExtResource("6_pdxww")]
+position = Vector2(1109, 336)
+rotation = 3.14159
+box_path = NodePath("../BombSpawner/BoxPath/Path2D/PathFollow2D")
+box_animation = NodePath("../BombSpawner/BoxPath/Path2D/AnimationPlayer")
+animated_sprite = NodePath("../BombSpawner/AnimatedSprite2D")
+flip_h = true
+flip_v = true
+
+[node name="BombSpawner" parent="BoxSpawners" instance=ExtResource("6_pdxww")]
+position = Vector2(32, 255)
+
+[node name="BombSpawner" parent="BoxSpawners/BombSpawner" instance=ExtResource("6_pdxww")]
+position = Vector2(3, 92)
+
+[node name="BombSpawner3" parent="BoxSpawners" node_paths=PackedStringArray("box_path", "box_animation", "animated_sprite") instance=ExtResource("6_pdxww")]
+position = Vector2(1107, 434)
+rotation = 3.14159
+box_path = NodePath("../BombSpawner/BoxPath/Path2D/PathFollow2D")
+box_animation = NodePath("../BombSpawner/BoxPath/Path2D/AnimationPlayer")
+animated_sprite = NodePath("../BombSpawner/AnimatedSprite2D")
+flip_h = true
+flip_v = true
