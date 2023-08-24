@@ -2159,9 +2159,12 @@ flip_v = true
 [node name="Pickups" type="Node2D" parent="."]
 
 [node name="Pickup" parent="Pickups" instance=ExtResource("8_k68ce")]
-position = Vector2(228, 619)
-pickup = 0
+position = Vector2(273, 450)
+pickup = 1
 
 [node name="Pickup2" parent="Pickups" instance=ExtResource("8_k68ce")]
-position = Vector2(531, 527)
-pickup = 1
+position = Vector2(635, 255)
+
+[node name="Pickup3" parent="Pickups" instance=ExtResource("8_k68ce")]
+position = Vector2(368, 624)
+pickup = 2

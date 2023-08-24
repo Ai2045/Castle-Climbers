@@ -10,7 +10,8 @@ func _on_body_entered(body):
 		animated_sprite.play("explode")
 		Global.disable_spawning()
 		
-		body.take_damage()
+		if Global.can_hurt == true:
+			body.take_damage()
 		
 	if body.name.begins_with("wall"):
 		queue_free()

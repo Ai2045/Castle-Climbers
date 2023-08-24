@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://duomtukxcksgh"]
+[gd_scene load_steps=56 format=3 uid="uid://duomtukxcksgh"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_o4idn"]
 [ext_resource type="Texture2D" uid="uid://1kw8i7c600wg" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Attack (78x58).png" id="2_yd10t"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://GUI/Health.gd" id="9_ujnra"]
 [ext_resource type="Texture2D" uid="uid://daomqyb4fg30b" path="res://Assets/heart/heart/sprite_4.png" id="10_xta6a"]
 [ext_resource type="FontFile" uid="uid://6t41kx6p1hri" path="res://Assets/Font/QuinqueFive.otf" id="11_ffb61"]
+[ext_resource type="Script" path="res://Scripts/Attack.gd" id="12_q66lp"]
+[ext_resource type="Texture2D" uid="uid://fd4pmxmcvdbr" path="res://Assets/lightning bolt/lightning bolt/sprite_4.png" id="13_s3pig"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guxkt"]
 size = Vector2(21, 23)
@@ -350,7 +352,7 @@ _data = {
 "move_right": SubResource("Animation_vogpg")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast")]
 script = ExtResource("1_o4idn")
 jump_height = -130
 player_sprite = NodePath("AnimatedSprite2D")
@@ -359,6 +361,9 @@ animation_player = NodePath("AnimationPlayer")
 offset_camera = NodePath("OffsetCamera")
 health = NodePath("UI/Health")
 health_label = NodePath("UI/Health/Label")
+attack = NodePath("UI/Attack")
+attack_boost_timer = NodePath("AttackBoostTimer")
+attack_rayCast = NodePath("AttackRayCast")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 0.5)
@@ -376,7 +381,7 @@ limit_right = 1152
 limit_bottom = 656
 
 [node name="OffsetCamera" type="Camera2D" parent="."]
-offset = Vector2(-100, -50)
+offset = Vector2(100, -50)
 enabled = false
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
@@ -420,4 +425,44 @@ text = "0"
 vertical_alignment = 1
 uppercase = true
 
+[node name="Attack" type="ColorRect" parent="UI" node_paths=PackedStringArray("label")]
+offset_left = 140.0
+offset_top = 20.0
+offset_right = 242.0
+offset_bottom = 60.0
+color = Color(0.172549, 0.172549, 0.172549, 0.407843)
+script = ExtResource("12_q66lp")
+label = NodePath("Label")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/Attack"]
+position = Vector2(25, 19)
+texture = ExtResource("13_s3pig")
+
+[node name="Label" type="Label" parent="UI/Attack"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -11.5
+offset_right = 13.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "0"
+vertical_alignment = 1
+uppercase = true
+
+[node name="AttackBoostTimer" type="Timer" parent="."]
+wait_time = 1000.0
+
+[node name="AttackRayCast" type="RayCast2D" parent="."]
+target_position = Vector2(50, 0)
+collide_with_areas = true
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="AttackBoostTimer" to="." method="_on_attack_boost_timer_timeout"]

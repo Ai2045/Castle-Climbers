@@ -30,5 +30,6 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if body.name == "Player":
-		get_tree().queue_delete(self)
 		body.add_pickup(pickup)
+		get_tree().queue_delete(self)
+		

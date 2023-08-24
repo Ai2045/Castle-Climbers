@@ -20,3 +20,5 @@ func enable_spawning():
 	can_spawn = true
 	
 enum Pickups {HEALTH, SCORE, ATTACK}
+
+var can_hurt = true

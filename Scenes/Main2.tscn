@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmmaes3tiqrv0"]
+[gd_scene load_steps=15 format=3 uid="uid://bmmaes3tiqrv0"]
 
 [ext_resource type="Texture2D" uid="uid://1bdvd6pt2ktd" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Terrain (32x32).png" id="1_fk44x"]
 [ext_resource type="Texture2D" uid="uid://sufk471liay6" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Decorations (32x32).png" id="2_ke7gn"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://duomtukxcksgh" path="res://Scenes/Player.tscn" id="4_3bjdg"]
 [ext_resource type="PackedScene" uid="uid://b20bmiuiv1bf4" path="res://Scenes/BombSpawner.tscn" id="5_xfvnf"]
 [ext_resource type="PackedScene" uid="uid://dl0mbqinutbef" path="res://Scenes/BoxSpawner.tscn" id="6_pdxww"]
+[ext_resource type="PackedScene" uid="uid://cvly2sehkl7hx" path="res://Scenes/Pickup.tscn" id="7_dnnbg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nv76t"]
 texture = ExtResource("1_fk44x")
@@ -2147,3 +2148,16 @@ box_animation = NodePath("../BombSpawner/BoxPath/Path2D/AnimationPlayer")
 animated_sprite = NodePath("../BombSpawner/AnimatedSprite2D")
 flip_h = true
 flip_v = true
+
+[node name="Pickups" type="Node2D" parent="."]
+
+[node name="Pickup" parent="Pickups" instance=ExtResource("7_dnnbg")]
+position = Vector2(670, 626)
+pickup = 2
+
+[node name="Pickup2" parent="Pickups" instance=ExtResource("7_dnnbg")]
+position = Vector2(478, 348)
+pickup = 1
+
+[node name="Pickup3" parent="Pickups" instance=ExtResource("7_dnnbg")]
+position = Vector2(1089, 529)
