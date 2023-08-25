@@ -2,11 +2,15 @@ extends CharacterBody2D
 
 signal update_lives(lives, max_lives)
 signal update_attack_boost(attack_time_left)
+signal update_score(score)
+
 @export var max_lives = 3
 @export var lives = 3
 @export var speed = 100
 @export var gravity = 200
 @export var jump_height = -150
+@export var score = 0
+var is_hurt = false
 
 var last_direction = 0
 var current_direction = 0
@@ -20,6 +24,8 @@ var current_direction = 0
 @export var attack: ColorRect
 @export var attack_boost_timer: Timer
 @export var attack_rayCast:RayCast2D
+@export var score_rayCast: RayCast2D
+@export var score_ui: ColorRect
 
 var attack_time_left = 0
 
@@ -29,6 +35,7 @@ func _ready():
 	print(attack_time_left)
 	update_lives.connect(health.update_lives)
 	update_attack_boost.connect(attack.update_attack_boost)
+	update_score.connect(score_ui.update_score)
 	health_label.text = str(lives)
 	
 func _physics_process(delta):
@@ -49,12 +56,22 @@ func _physics_process(delta):
 			if target.name == "Box" and Input.is_action_pressed("ui_attack"):
 				Global.disable_spawning()
 				target.queue_free()
+				increase_score(10)
 			if target.name == "Bomb" and Input.is_action_pressed("ui_attack"):         
 				Global.is_bomb_moving = false
-				
+				increase_score(10)
 			Global.can_hurt = false
 		else :
 			Global.can_hurt = true
+	
+	if Input.is_action_pressed("ui_jump"):
+		var target = score_rayCast.get_collider()
+		
+		if target != null:
+			if target.name == "Box" or target.name == "Bomb":
+				if is_hurt == false:
+					increase_score(1)
+
 func horizontal_movement():
 	
 	var horizontal_input = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -104,6 +121,7 @@ func _on_animated_sprite_2d_animation_finished():
 		Global.is_attacking = false
 	Global.is_climbing = false
 	set_physics_process(true)
+	is_hurt = false
 
 func _process(delta):
 	if velocity.x > 0:
@@ -141,23 +159,23 @@ func take_damage():
 	if lives > 0 and Global.can_hurt == true:
 		lives = lives -1
 		update_lives.emit(lives, max_lives)
-		print(lives)
 		player_sprite.play("damage")
 		set_physics_process(false)
+		is_hurt = true
+	
+		decrease_score(10)
 
 func add_pickup(pickup):
 	if pickup == Global.Pickups.HEALTH:
 		if lives < max_lives:
 			lives += 1
 			update_lives.emit(lives, max_lives)
-			print(lives)
 			
 	if pickup == Global.Pickups.ATTACK:
 		Global.is_attacking = true
-		print("take")
 		
 	if pickup == Global.Pickups.SCORE:
-		pass
+		increase_score(1000)
 			
 		
 
@@ -166,3 +184,12 @@ func _on_attack_boost_timer_timeout():
 	if attack_time_left <= 0:
 		Global.is_attacking = false
 		Global.can_hurt = true
+
+func increase_score(score_count):
+	score += score_count
+	update_score.emit(score)
+	
+func decrease_score(score_count):
+	if score >= score_count:
+		score -= score_count
+		update_score.emit(score)

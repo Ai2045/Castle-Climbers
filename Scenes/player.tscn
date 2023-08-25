@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://duomtukxcksgh"]
+[gd_scene load_steps=58 format=3 uid="uid://duomtukxcksgh"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_o4idn"]
 [ext_resource type="Texture2D" uid="uid://1kw8i7c600wg" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Attack (78x58).png" id="2_yd10t"]
@@ -13,6 +13,8 @@
 [ext_resource type="FontFile" uid="uid://6t41kx6p1hri" path="res://Assets/Font/QuinqueFive.otf" id="11_ffb61"]
 [ext_resource type="Script" path="res://Scripts/Attack.gd" id="12_q66lp"]
 [ext_resource type="Texture2D" uid="uid://fd4pmxmcvdbr" path="res://Assets/lightning bolt/lightning bolt/sprite_4.png" id="13_s3pig"]
+[ext_resource type="Script" path="res://Scenes/Score.gd" id="14_dd4nw"]
+[ext_resource type="Texture2D" uid="uid://b7m6ri64p6nmp" path="res://Assets/star/star/sprite_04.png" id="15_rirmn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guxkt"]
 size = Vector2(21, 23)
@@ -352,7 +354,7 @@ _data = {
 "move_right": SubResource("Animation_vogpg")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast", "score_rayCast", "score_ui")]
 script = ExtResource("1_o4idn")
 jump_height = -130
 player_sprite = NodePath("AnimatedSprite2D")
@@ -364,6 +366,8 @@ health_label = NodePath("UI/Health/Label")
 attack = NodePath("UI/Attack")
 attack_boost_timer = NodePath("AttackBoostTimer")
 attack_rayCast = NodePath("AttackRayCast")
+score_rayCast = NodePath("ScoreRayCast")
+score_ui = NodePath("UI/Score")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 0.5)
@@ -457,11 +461,46 @@ text = "0"
 vertical_alignment = 1
 uppercase = true
 
+[node name="Score" type="ColorRect" parent="UI" node_paths=PackedStringArray("label")]
+offset_left = 260.0
+offset_top = 20.0
+offset_right = 460.0
+offset_bottom = 60.0
+color = Color(0.172549, 0.172549, 0.172549, 0.407843)
+script = ExtResource("14_dd4nw")
+label = NodePath("Label")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/Score"]
+position = Vector2(25, 17)
+texture = ExtResource("15_rirmn")
+
+[node name="Label" type="Label" parent="UI/Score"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -11.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "0"
+vertical_alignment = 1
+uppercase = true
+
 [node name="AttackBoostTimer" type="Timer" parent="."]
 wait_time = 1000.0
 
 [node name="AttackRayCast" type="RayCast2D" parent="."]
 target_position = Vector2(50, 0)
+collide_with_areas = true
+
+[node name="ScoreRayCast" type="RayCast2D" parent="."]
+position = Vector2(-5, 0)
 collide_with_areas = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
