@@ -26,8 +26,12 @@ var current_direction = 0
 @export var attack_rayCast:RayCast2D
 @export var score_rayCast: RayCast2D
 @export var score_ui: ColorRect
+@export var time_label: Label
+@export var level: Label
 
 var attack_time_left = 0
+
+var level_start_time = Time.get_ticks_msec()
 
 func _ready():
 	current_direction = -1
@@ -154,6 +158,8 @@ func _process(delta):
 			
 		last_direction = current_direction
 			
+	update_time_label()
+	update_level_label()
 
 func take_damage():
 	if lives > 0 and Global.can_hurt == true:
@@ -193,3 +199,37 @@ func decrease_score(score_count):
 	if score >= score_count:
 		score -= score_count
 		update_score.emit(score)
+
+func final_score_time_and_rating():
+	var time_taken = (Time.get_ticks_msec() - level_start_time) /1000.0
+	var time_rounded = str(roundf(time_taken)) + " secs"
+	
+	var rating = ""
+	
+	if time_taken <= 60 and score >= 10000:
+		rating = "Master" # Exceptionally high score and fast completion
+	elif time_taken <= 120 and score >= 5000:
+		rating = "Pro" # Very high score and fast completion
+	elif time_taken <= 180 and score >= 3000:
+		rating = "Expert" # High score and moderately fast completion
+	elif time_taken <= 240 and score >= 2000:
+		rating = "Intermediate" # Good score and completion time
+	elif time_taken <= 300 and score >= 1000:
+		rating = "Amateur" # Decent score, but not very fast
+	else:
+		rating = "Beginner" # All other cases
+		
+	Global.final_score = score
+	Global.final_time = time_rounded
+	Global.final_rating = rating
+
+func update_time_label():
+	var time_passed = (Time.get_ticks_msec() - level_start_time) /1000.0
+	time_label.text = str(round(time_passed)) + "s"
+	
+func update_level_label():
+	var current_level = Global.get_current_level_number()
+	if current_level != -1:
+		level.text = " " + str(current_level)
+	else:
+		level.text = "err"

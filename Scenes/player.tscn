@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://duomtukxcksgh"]
+[gd_scene load_steps=59 format=3 uid="uid://duomtukxcksgh"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_o4idn"]
 [ext_resource type="Texture2D" uid="uid://1kw8i7c600wg" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Attack (78x58).png" id="2_yd10t"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://fd4pmxmcvdbr" path="res://Assets/lightning bolt/lightning bolt/sprite_4.png" id="13_s3pig"]
 [ext_resource type="Script" path="res://Scenes/Score.gd" id="14_dd4nw"]
 [ext_resource type="Texture2D" uid="uid://b7m6ri64p6nmp" path="res://Assets/star/star/sprite_04.png" id="15_rirmn"]
+[ext_resource type="Texture2D" uid="uid://d3uamo8s6lht5" path="res://Assets/clock.png" id="16_5kbek"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guxkt"]
 size = Vector2(21, 23)
@@ -354,7 +355,7 @@ _data = {
 "move_right": SubResource("Animation_vogpg")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast", "score_rayCast", "score_ui")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast", "score_rayCast", "score_ui", "time_label", "level")]
 script = ExtResource("1_o4idn")
 jump_height = -130
 player_sprite = NodePath("AnimatedSprite2D")
@@ -368,6 +369,8 @@ attack_boost_timer = NodePath("AttackBoostTimer")
 attack_rayCast = NodePath("AttackRayCast")
 score_rayCast = NodePath("ScoreRayCast")
 score_ui = NodePath("UI/Score")
+time_label = NodePath("UI/Time/Label")
+level = NodePath("UI/Level/Value")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 0.5)
@@ -491,6 +494,84 @@ theme_override_font_sizes/font_size = 15
 text = "0"
 vertical_alignment = 1
 uppercase = true
+
+[node name="Time" type="ColorRect" parent="UI" node_paths=PackedStringArray("label")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -222.0
+offset_top = 70.0
+offset_right = -22.0
+offset_bottom = 110.0
+grow_horizontal = 0
+color = Color(0.172549, 0.172549, 0.172549, 0.407843)
+script = ExtResource("14_dd4nw")
+label = NodePath("Label")
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/Time"]
+position = Vector2(22, 20)
+scale = Vector2(0.057, 0.057)
+texture = ExtResource("16_5kbek")
+
+[node name="Label" type="Label" parent="UI/Time"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -11.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "0"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Level" type="ColorRect" parent="UI" node_paths=PackedStringArray("label")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -222.0
+offset_top = 20.0
+offset_right = -22.0
+offset_bottom = 60.0
+grow_horizontal = 0
+color = Color(0.172549, 0.172549, 0.172549, 0.407843)
+script = ExtResource("14_dd4nw")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="UI/Level"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -11.0
+offset_right = -40.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "LVL:"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Value" type="Label" parent="UI/Level"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 9.0
+offset_right = 230.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "0"
 
 [node name="AttackBoostTimer" type="Timer" parent="."]
 wait_time = 1000.0
