@@ -11,6 +11,7 @@ func _ready():
 	animated_sprite.play("cannon_idle")
 	
 	current_scene_path = "/root/" + Global.current_scene_name + "/"
+	
 	bomb_path =  get_node(current_scene_path + "/BombPath/Path2D/PathFollow2D")
 	bomb_animation = get_node(current_scene_path + "/BombPath/Path2D/AnimationPlayer")
 	

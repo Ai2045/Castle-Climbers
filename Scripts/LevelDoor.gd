@@ -37,4 +37,5 @@ func _on_continue_button_pressed():
 	var path = next_level.resource_path
 	var scene_name = path.get_file().split(".")[0]
 	Global.current_scene_name = scene_name
+	print(scene_name)
 	

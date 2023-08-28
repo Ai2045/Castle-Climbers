@@ -28,6 +28,11 @@ var current_direction = 0
 @export var score_ui: ColorRect
 @export var time_label: Label
 @export var level: Label
+@export var gameOver_menu: ColorRect
+@export var UI: CanvasLayer
+@export var final_time: Label
+@export var final_score: Label
+@export var final_rating: Label
 
 var attack_time_left = 0
 
@@ -126,6 +131,17 @@ func _on_animated_sprite_2d_animation_finished():
 	Global.is_climbing = false
 	set_physics_process(true)
 	is_hurt = false
+	
+	if player_sprite.animation == "death":
+		get_tree().paused = true
+		gameOver_menu.visible = true
+		animation_player.play("ui_visibility")
+		UI.visible = false
+		final_score_time_and_rating()
+		
+		final_time.text = str(Global.final_time)
+		final_score.text = str(Global.final_score)
+		final_rating.text = str(Global.final_rating)
 
 func _process(delta):
 	if velocity.x > 0:
@@ -170,6 +186,9 @@ func take_damage():
 		is_hurt = true
 	
 		decrease_score(10)
+		
+	if lives <= 0:
+		player_sprite.play("death")
 
 func add_pickup(pickup):
 	if pickup == Global.Pickups.HEALTH:
@@ -233,3 +252,10 @@ func update_level_label():
 		level.text = " " + str(current_level)
 	else:
 		level.text = "err"
+
+
+func _on_restart_button_pressed():
+	get_tree().paused = false
+	gameOver_menu.visible = false
+	get_tree().reload_current_scene()
+	

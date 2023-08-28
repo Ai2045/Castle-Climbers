@@ -1,15 +1,15 @@
 [gd_scene load_steps=15 format=3 uid="uid://bmmaes3tiqrv0"]
 
-[ext_resource type="Texture2D" uid="uid://1bdvd6pt2ktd" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Terrain (32x32).png" id="1_fk44x"]
-[ext_resource type="Texture2D" uid="uid://sufk471liay6" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Decorations (32x32).png" id="2_ke7gn"]
-[ext_resource type="PackedScene" uid="uid://c77m4sxupah75" path="res://Scenes/Ladder.tscn" id="3_ymk0i"]
-[ext_resource type="PackedScene" uid="uid://duomtukxcksgh" path="res://Scenes/Player.tscn" id="4_3bjdg"]
-[ext_resource type="PackedScene" uid="uid://b20bmiuiv1bf4" path="res://Scenes/BombSpawner.tscn" id="5_xfvnf"]
-[ext_resource type="PackedScene" uid="uid://dl0mbqinutbef" path="res://Scenes/BoxSpawner.tscn" id="6_pdxww"]
-[ext_resource type="PackedScene" uid="uid://cvly2sehkl7hx" path="res://Scenes/Pickup.tscn" id="7_dnnbg"]
+[ext_resource type="Texture2D" uid="uid://1bdvd6pt2ktd" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Terrain (32x32).png" id="1_03m55"]
+[ext_resource type="Texture2D" uid="uid://sufk471liay6" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Decorations (32x32).png" id="2_46b6q"]
+[ext_resource type="PackedScene" uid="uid://c77m4sxupah75" path="res://Scenes/Ladder.tscn" id="3_4jxke"]
+[ext_resource type="PackedScene" uid="uid://duomtukxcksgh" path="res://Scenes/Player.tscn" id="4_kntri"]
+[ext_resource type="PackedScene" uid="uid://b20bmiuiv1bf4" path="res://Scenes/BombSpawner.tscn" id="5_4ayph"]
+[ext_resource type="PackedScene" uid="uid://dl0mbqinutbef" path="res://Scenes/BoxSpawner.tscn" id="6_8jteu"]
+[ext_resource type="PackedScene" uid="uid://cvly2sehkl7hx" path="res://Scenes/Pickup.tscn" id="7_gln6e"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nv76t"]
-texture = ExtResource("1_fk44x")
+texture = ExtResource("1_03m55")
 2:2/0 = 0
 2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:2/0/physics_layer_0/angular_velocity = 0.0
@@ -1796,7 +1796,7 @@ texture = ExtResource("1_fk44x")
 2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g8645"]
-texture = ExtResource("2_ke7gn")
+texture = ExtResource("2_46b6q")
 2:2/0 = 0
 2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:2/0/physics_layer_0/angular_velocity = 0.0
@@ -2039,7 +2039,7 @@ _data = {
 "bomb_movement": SubResource("Animation_8n2ex")
 }
 
-[node name="Main" type="Node2D"]
+[node name="Main_2" type="Node2D"]
 
 [node name="Level" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_jasof")
@@ -2064,47 +2064,47 @@ layer_2/tile_data = PackedInt32Array(524307, 262145, 6, 589843, 262145, 7, 65537
 
 [node name="Ladders" type="Node2D" parent="."]
 
-[node name="Ladder" parent="Ladders" instance=ExtResource("3_ymk0i")]
+[node name="Ladder" parent="Ladders" instance=ExtResource("3_4jxke")]
 position = Vector2(1042, 497)
 scale = Vector2(1, 0.75)
 
-[node name="Ladder2" parent="Ladders" instance=ExtResource("3_ymk0i")]
+[node name="Ladder2" parent="Ladders" instance=ExtResource("3_4jxke")]
 position = Vector2(336, 415)
 scale = Vector2(1, 0.75)
 
-[node name="Ladder3" parent="Ladders" instance=ExtResource("3_ymk0i")]
+[node name="Ladder3" parent="Ladders" instance=ExtResource("3_4jxke")]
 position = Vector2(82, 504)
 scale = Vector2(1, 0.65)
 
-[node name="Ladder4" parent="Ladders" instance=ExtResource("3_ymk0i")]
+[node name="Ladder4" parent="Ladders" instance=ExtResource("3_4jxke")]
 position = Vector2(734, 220)
 scale = Vector2(1, 0.75)
 
-[node name="Ladder5" parent="Ladders" instance=ExtResource("3_ymk0i")]
+[node name="Ladder5" parent="Ladders" instance=ExtResource("3_4jxke")]
 position = Vector2(145, 412)
 scale = Vector2(1, 0.75)
 
-[node name="Ladder6" parent="Ladders" instance=ExtResource("3_ymk0i")]
+[node name="Ladder6" parent="Ladders" instance=ExtResource("3_4jxke")]
 position = Vector2(940, 416)
 scale = Vector2(1, 0.75)
 
-[node name="Ladder7" parent="Ladders" instance=ExtResource("3_ymk0i")]
+[node name="Ladder7" parent="Ladders" instance=ExtResource("3_4jxke")]
 position = Vector2(1022, 221)
 scale = Vector2(1, 0.75)
 
-[node name="Ladder8" parent="Ladders" instance=ExtResource("3_ymk0i")]
+[node name="Ladder8" parent="Ladders" instance=ExtResource("3_4jxke")]
 position = Vector2(259, 129)
 scale = Vector2(1, 0.75)
 
-[node name="Ladder9" parent="Ladders" instance=ExtResource("3_ymk0i")]
+[node name="Ladder9" parent="Ladders" instance=ExtResource("3_4jxke")]
 position = Vector2(789, 593)
 scale = Vector2(1, 0.75)
 
-[node name="Ladder10" parent="Ladders" instance=ExtResource("3_ymk0i")]
+[node name="Ladder10" parent="Ladders" instance=ExtResource("3_4jxke")]
 position = Vector2(281, 593)
 scale = Vector2(1, 0.75)
 
-[node name="Player" parent="." instance=ExtResource("4_3bjdg")]
+[node name="Player" parent="." instance=ExtResource("4_kntri")]
 position = Vector2(119, 615)
 
 [node name="BombPath" type="Node2D" parent="."]
@@ -2120,44 +2120,40 @@ libraries = {
 "": SubResource("AnimationLibrary_35u35")
 }
 
-[node name="BombSpawner" parent="." instance=ExtResource("5_xfvnf")]
+[node name="BombSpawner" parent="." instance=ExtResource("5_4ayph")]
 position = Vector2(74, 162)
 
 [node name="BoxSpawners" type="Node2D" parent="."]
 
-[node name="BombSpawner2" parent="BoxSpawners" node_paths=PackedStringArray("box_path", "box_animation", "animated_sprite") instance=ExtResource("6_pdxww")]
-position = Vector2(1109, 336)
-rotation = 3.14159
-box_path = NodePath("../BombSpawner/BoxPath/Path2D/PathFollow2D")
-box_animation = NodePath("../BombSpawner/BoxPath/Path2D/AnimationPlayer")
-animated_sprite = NodePath("../BombSpawner/AnimatedSprite2D")
+[node name="BombSpawner" parent="BoxSpawners" instance=ExtResource("6_8jteu")]
+position = Vector2(35, 255)
+flip_h = true
+
+[node name="BombSpawner2" parent="BoxSpawners" instance=ExtResource("6_8jteu")]
+position = Vector2(36, 351)
+flip_h = true
+
+[node name="BombSpawner3" parent="BoxSpawners" instance=ExtResource("6_8jteu")]
+position = Vector2(1103, 331)
+rotation = -3.14159
 flip_h = true
 flip_v = true
 
-[node name="BombSpawner" parent="BoxSpawners" instance=ExtResource("6_pdxww")]
-position = Vector2(32, 255)
-
-[node name="BombSpawner" parent="BoxSpawners/BombSpawner" instance=ExtResource("6_pdxww")]
-position = Vector2(3, 92)
-
-[node name="BombSpawner3" parent="BoxSpawners" node_paths=PackedStringArray("box_path", "box_animation", "animated_sprite") instance=ExtResource("6_pdxww")]
-position = Vector2(1107, 434)
-rotation = 3.14159
-box_path = NodePath("../BombSpawner/BoxPath/Path2D/PathFollow2D")
-box_animation = NodePath("../BombSpawner/BoxPath/Path2D/AnimationPlayer")
-animated_sprite = NodePath("../BombSpawner/AnimatedSprite2D")
+[node name="BombSpawner4" parent="BoxSpawners" instance=ExtResource("6_8jteu")]
+position = Vector2(1099, 429)
+rotation = -3.14159
 flip_h = true
 flip_v = true
 
 [node name="Pickups" type="Node2D" parent="."]
 
-[node name="Pickup" parent="Pickups" instance=ExtResource("7_dnnbg")]
+[node name="Pickup" parent="Pickups" instance=ExtResource("7_gln6e")]
 position = Vector2(670, 626)
 pickup = 2
 
-[node name="Pickup2" parent="Pickups" instance=ExtResource("7_dnnbg")]
+[node name="Pickup2" parent="Pickups" instance=ExtResource("7_gln6e")]
 position = Vector2(478, 348)
 pickup = 1
 
-[node name="Pickup3" parent="Pickups" instance=ExtResource("7_dnnbg")]
+[node name="Pickup3" parent="Pickups" instance=ExtResource("7_gln6e")]
 position = Vector2(1089, 529)
