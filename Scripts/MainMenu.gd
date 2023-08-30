@@ -14,7 +14,13 @@ func _on_button_new_pressed():
 	get_tree().paused = false
 
 func _on_button_load_pressed():
-	pass # Replace with function body.
+	var current_scene = get_tree().current_scene
+	
+	if current_scene:
+		current_scene.queue_free()
+	
+	Global.load_game()
+	get_tree().paused = false
 
 
 func _on_button_quit_pressed():
