@@ -33,6 +33,7 @@ var current_direction = 0
 @export var final_time: Label
 @export var final_score: Label
 @export var final_rating: Label
+@export var pause_menu: CanvasLayer
 
 var attack_time_left = 0
 
@@ -102,6 +103,11 @@ func player_animations():
 		player_sprite.play("idle")
 
 func _input(event):
+	
+	if event.is_action_pressed("ui_pause"):
+		get_tree().paused = true
+		pause_menu.visible = true
+		
 	if event.is_action_pressed("ui_attack"):
 		if Global.is_attacking == true:
 			player_sprite.play("attack")
@@ -259,3 +265,20 @@ func _on_restart_button_pressed():
 	gameOver_menu.visible = false
 	get_tree().reload_current_scene()
 	
+
+
+func _on_button_resume_pressed():
+	get_tree().paused = false
+	pause_menu.visible = false
+
+
+func _on_button_save_pressed():
+	pass # Replace with function body.
+
+
+func _on_button_load_pressed():
+	pass # Replace with function body.
+
+
+func _on_button_quit_pressed():
+	get_tree().change_scene_to_file("res://Scenes/Main_Menu.tscn")
