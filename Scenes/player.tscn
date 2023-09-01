@@ -1,4 +1,4 @@
-[gd_scene load_steps=82 format=3 uid="uid://duomtukxcksgh"]
+[gd_scene load_steps=92 format=3 uid="uid://duomtukxcksgh"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_o4idn"]
 [ext_resource type="Texture2D" uid="uid://1kw8i7c600wg" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Attack (78x58).png" id="2_yd10t"]
@@ -20,6 +20,16 @@
 [ext_resource type="Texture2D" uid="uid://b7sbeetauvpyt" path="res://Assets/Kings and Pigs/Sprites/06-Pig Hide in the Box/Looking Out (26x20).png" id="18_8hshj"]
 [ext_resource type="Texture2D" uid="uid://cwb88dltum2ut" path="res://Assets/Kings and Pigs/Sprites/08-Box/Idle.png" id="19_2umqa"]
 [ext_resource type="Texture2D" uid="uid://bjshy0q3iqxy6" path="res://Assets/Kings and Pigs/Sprites/09-Bomb/Bomb Off.png" id="20_4gd5m"]
+[ext_resource type="AudioStream" uid="uid://qtuul3tbbcuw" path="res://Assets/Music/arguement-loop-27901.mp3" id="21_5c247"]
+[ext_resource type="AudioStream" uid="uid://byxbv76ja5qmu" path="res://Assets/Music/8bit-music-for-game-68698.mp3" id="22_6g3rq"]
+[ext_resource type="AudioStream" uid="uid://bpe5hwbycwte2" path="res://Assets/Music/kl-peach-game-over-iii-142453.mp3" id="23_twf3t"]
+[ext_resource type="AudioStream" uid="uid://bsr8a7bf54hgr" path="res://Assets/Music/Retro Sounds/audio effects retro/Animal and caracters/characters/actions and reactions interactions/jump.wav" id="24_fv8bh"]
+[ext_resource type="AudioStream" uid="uid://bifujr7yduve3" path="res://Assets/Music/Retro Sounds/audio effects retro/Extras/idk/embarrassed.wav" id="25_iuw23"]
+[ext_resource type="AudioStream" uid="uid://cgc362n0mn0ac" path="res://Assets/Music/Retro Sounds/audio effects retro/statistcs (progress on your game)/score.wav" id="26_hrkkm"]
+[ext_resource type="AudioStream" uid="uid://bh2gg1p8hjjk8" path="res://Assets/Music/Retro Sounds/audio effects retro/statistcs (progress on your game)/boost.wav" id="27_ycbbd"]
+[ext_resource type="AudioStream" uid="uid://bwsnt7d1kpxme" path="res://Assets/Music/Retro Sounds/audio effects retro/statistcs (progress on your game)/upgrade.wav" id="28_6tvfy"]
+[ext_resource type="AudioStream" uid="uid://bwfl0wo1gybc3" path="res://Assets/Music/Retro Sounds/audio effects retro/Animal and caracters/characters/attack/attack variation.wav" id="29_5csc1"]
+[ext_resource type="AudioStream" uid="uid://d0ttl8vjk3uby" path="res://Assets/Music/Retro Sounds/audio effects retro/statistcs (progress on your game)/Pickup Coin.wav" id="30_7hh33"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guxkt"]
 size = Vector2(21, 23)
@@ -872,7 +882,7 @@ animations = [{
 "speed": 11.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast", "score_rayCast", "score_ui", "time_label", "level", "gameOver_menu", "UI", "final_time", "final_score", "final_rating", "pause_menu", "instructions")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast", "score_rayCast", "score_ui", "time_label", "level", "gameOver_menu", "UI", "final_time", "final_score", "final_rating", "pause_menu", "instructions", "background_music", "pauseMenu_music", "gameOver_music", "jumpSFX", "damageSFX", "healthSFX", "scoreSFX", "boostSFX", "attackSFX", "increaseScoreSFX")]
 script = ExtResource("1_o4idn")
 jump_height = -130
 player_sprite = NodePath("AnimatedSprite2D")
@@ -895,6 +905,16 @@ final_score = NodePath("GameOver/Menu/Container/Score/Value")
 final_rating = NodePath("GameOver/Menu/Container/Ranking/Value")
 pause_menu = NodePath("PauseMenu")
 instructions = NodePath("Instructions")
+background_music = NodePath("Music/BackgroundMusic")
+pauseMenu_music = NodePath("Music/PauseMenuMusic")
+gameOver_music = NodePath("Music/GameOverMusic")
+jumpSFX = NodePath("Music/JumpSFX")
+damageSFX = NodePath("Music/DamageSFX")
+healthSFX = NodePath("Music/HealthSFX")
+scoreSFX = NodePath("Music/ScoreSFX")
+boostSFX = NodePath("Music/BoostSFX")
+attackSFX = NodePath("Music/AttackSFX")
+increaseScoreSFX = NodePath("Music/IncreseScoreSFX")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 0.5)
@@ -1503,6 +1523,7 @@ text = "Game Instructions"
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
 
 [node name="Label" type="Label" parent="Instructions/Menu/Container/Inputs"]
 layout_mode = 1
@@ -1555,8 +1576,10 @@ theme_override_font_sizes/font_size = 15
 text = "- Will restore 1 of your 3 lives"
 
 [node name="Boosts" type="ColorRect" parent="Instructions/Menu/Container"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Boosts"]
 position = Vector2(45, 290)
@@ -1581,8 +1604,10 @@ theme_override_font_sizes/font_size = 15
 text = "- Enables “SHIFT” to destroy obstacles"
 
 [node name="Score" type="ColorRect" parent="Instructions/Menu/Container"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Score"]
 position = Vector2(50, 325)
@@ -1607,8 +1632,10 @@ theme_override_font_sizes/font_size = 15
 text = "- Will give you 1000 score points"
 
 [node name="Time" type="ColorRect" parent="Instructions/Menu/Container"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Time"]
 position = Vector2(45, 373)
@@ -1634,8 +1661,10 @@ theme_override_font_sizes/font_size = 15
 text = "- How long you’ve been in the current level"
 
 [node name="Box" type="ColorRect" parent="Instructions/Menu/Container"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Box"]
 position = Vector2(50, 410)
@@ -1661,8 +1690,10 @@ theme_override_font_sizes/font_size = 15
 text = "- Jump over obstacles to avoid losing 10 points"
 
 [node name="Bomb" type="ColorRect" parent="Instructions/Menu/Container"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Bomb"]
 position = Vector2(50, 445)
@@ -1686,6 +1717,38 @@ theme_override_colors/font_color = Color(0.709804, 0.709804, 0.709804, 1)
 theme_override_fonts/font = ExtResource("11_ffb61")
 theme_override_font_sizes/font_size = 15
 text = "- Jump over obstacles to avoid losing 100 points"
+
+[node name="Music" type="Node2D" parent="."]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("21_5c247")
+
+[node name="PauseMenuMusic" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("22_6g3rq")
+
+[node name="GameOverMusic" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("23_twf3t")
+
+[node name="JumpSFX" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("24_fv8bh")
+
+[node name="DamageSFX" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("25_iuw23")
+
+[node name="ScoreSFX" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("26_hrkkm")
+
+[node name="BoostSFX" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("27_ycbbd")
+
+[node name="HealthSFX" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("28_6tvfy")
+
+[node name="AttackSFX" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("29_5csc1")
+
+[node name="IncreseScoreSFX" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("30_7hh33")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="pressed" from="GameOver/Menu/Container/RestartButton" to="." method="_on_restart_button_pressed"]

@@ -1,8 +1,12 @@
 extends CanvasLayer
 
+@export var background_music: AudioStreamPlayer
+
 func _ready():
 	get_tree().paused = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	background_music.play()
 
 func _on_button_new_pressed():
 	var current_scene = get_tree().current_scene

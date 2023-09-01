@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bfl5lh6et551m"]
+[gd_scene load_steps=34 format=3 uid="uid://bfl5lh6et551m"]
 
 [ext_resource type="Script" path="res://Scripts/LevelDoor.gd" id="1_dvcm7"]
 [ext_resource type="Texture2D" uid="uid://bll5xyyku7qqn" path="res://Assets/Kings and Pigs/Sprites/11-Door/Idle.png" id="1_e5rpo"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://1bdvd6pt2ktd" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Terrain (32x32).png" id="4_2gf3e"]
 [ext_resource type="Texture2D" uid="uid://di3ywju7v02i2" path="res://Assets/Kings and Pigs/Sprites/04-Pig Throwing a Box/Idle (26x30).png" id="5_n4wk2"]
 [ext_resource type="Texture2D" uid="uid://d3m2k7njkfpmi" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Idle (78x58)2.png" id="6_gfu33"]
+[ext_resource type="AudioStream" uid="uid://cqw85f0ovkio8" path="res://Assets/Music/Retro Sounds/audio effects retro/Machines/computer(turn on).wav" id="7_ydqb4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5pit0"]
 size = Vector2(50, 54)
@@ -562,7 +563,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="LevelDoor" type="Area2D" node_paths=PackedStringArray("menu", "animation_player", "final_time", "final_score", "final_rating")]
+[node name="LevelDoor" type="Area2D" node_paths=PackedStringArray("menu", "animation_player", "final_time", "final_score", "final_rating", "levelUp_music")]
 process_mode = 3
 script = ExtResource("1_dvcm7")
 menu = NodePath("UI/Menu")
@@ -570,6 +571,7 @@ animation_player = NodePath("AnimationPlayer")
 final_time = NodePath("UI/Menu/Container/TimeCompleted/Value")
 final_score = NodePath("UI/Menu/Container/Score/Value")
 final_rating = NodePath("UI/Menu/Container/Ranking/Value")
+levelUp_music = NodePath("Music/LevelUpMusic")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_e5rpo")
@@ -815,6 +817,11 @@ position = Vector2(177, 530)
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_fvmt6")
 autoplay = "default"
+
+[node name="Music" type="Node2D" parent="."]
+
+[node name="LevelUpMusic" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("7_ydqb4")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="pressed" from="UI/Menu/Container/ContinueButton" to="." method="_on_continue_button_pressed"]

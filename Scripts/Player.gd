@@ -36,6 +36,18 @@ var current_direction = 0
 @export var pause_menu: CanvasLayer
 
 @export var instructions: Popup
+
+@export var background_music: AudioStreamPlayer
+@export var pauseMenu_music:AudioStreamPlayer
+@export var gameOver_music: AudioStreamPlayer
+@export var jumpSFX: AudioStreamPlayer
+@export var damageSFX: AudioStreamPlayer
+@export var healthSFX: AudioStreamPlayer
+@export var scoreSFX: AudioStreamPlayer
+@export var boostSFX: AudioStreamPlayer
+@export var attackSFX: AudioStreamPlayer
+@export var increaseScoreSFX: AudioStreamPlayer
+
 var attack_time_left = 0
 
 var level_start_time = Time.get_ticks_msec()
@@ -52,6 +64,8 @@ func _ready():
 	update_attack_boost.connect(attack.update_attack_boost)
 	update_score.connect(score_ui.update_score)
 	health_label.text = str(lives)
+	
+	background_music.play()
 	
 func _physics_process(delta):
 	
@@ -115,13 +129,18 @@ func _input(event):
 		
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
+		background_music.stop()
+		pauseMenu_music.play()
+		
 	if event.is_action_pressed("ui_attack"):
 		if Global.is_attacking == true:
 			player_sprite.play("attack")
+			attackSFX.play()
 		
 	if event.is_action_pressed("ui_jump") and is_on_floor():
 		velocity.y = jump_height
 		player_sprite.play("jump")
+		jumpSFX.play()
 		
 	if Global.is_climbing == true:
 		if !Input.is_anything_pressed():
@@ -131,7 +150,8 @@ func _input(event):
 			player_sprite.play("climb")
 			gravity = 100
 			velocity.y = -160
-			Global.is_jumping = false
+			Global.is_jumping = true
+			jumpSFX.play()
 			
 	else:
 			gravity = 200
@@ -157,6 +177,9 @@ func _on_animated_sprite_2d_animation_finished():
 		final_rating.text = str(Global.final_rating)
 		
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
+		background_music.stop()
+		gameOver_music.play()
 
 func _process(delta):
 	
@@ -210,6 +233,7 @@ func take_damage():
 		is_hurt = true
 	
 		decrease_score(10)
+		damageSFX.play()
 		
 	if lives <= 0:
 		player_sprite.play("death")
@@ -219,12 +243,15 @@ func add_pickup(pickup):
 		if lives < max_lives:
 			lives += 1
 			update_lives.emit(lives, max_lives)
+			healthSFX.play()
 			
 	if pickup == Global.Pickups.ATTACK:
 		Global.is_attacking = true
+		boostSFX.play()
 		
 	if pickup == Global.Pickups.SCORE:
 		increase_score(1000)
+		scoreSFX.play()
 			
 		
 
@@ -237,6 +264,7 @@ func _on_attack_boost_timer_timeout():
 func increase_score(score_count):
 	score += score_count
 	update_score.emit(score)
+	increaseScoreSFX.play()
 	
 func decrease_score(score_count):
 	if score >= score_count:
@@ -285,11 +313,16 @@ func _on_restart_button_pressed():
 	gameOver_menu.visible = false
 	get_tree().reload_current_scene()
 	
+	background_music.play()
+	
 
 
 func _on_button_resume_pressed():
 	get_tree().paused = false
 	pause_menu.visible = false
+	
+	background_music.play()
+	pauseMenu_music.stop()
 
 
 func _on_button_save_pressed():

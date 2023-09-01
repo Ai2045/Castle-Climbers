@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://hiruv1l6x7hh"]
+[gd_scene load_steps=34 format=3 uid="uid://hiruv1l6x7hh"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="1_uyc4y"]
 [ext_resource type="FontFile" uid="uid://6t41kx6p1hri" path="res://Assets/Font/QuinqueFive.otf" id="2_akliq"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b7sbeetauvpyt" path="res://Assets/Kings and Pigs/Sprites/06-Pig Hide in the Box/Looking Out (26x20).png" id="4_cvwqk"]
 [ext_resource type="Texture2D" uid="uid://dohiy8rd7cjxm" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Idle (78x58).png" id="5_j7d8w"]
 [ext_resource type="Texture2D" uid="uid://di3ywju7v02i2" path="res://Assets/Kings and Pigs/Sprites/04-Pig Throwing a Box/Idle (26x30).png" id="6_o7pyx"]
+[ext_resource type="AudioStream" uid="uid://byxbv76ja5qmu" path="res://Assets/Music/8bit-music-for-game-68698.mp3" id="7_owier"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kkw5q"]
 texture = ExtResource("3_iedvj")
@@ -560,8 +561,9 @@ animations = [{
 "speed": 9.0
 }]
 
-[node name="MainMenu" type="CanvasLayer"]
+[node name="MainMenu" type="CanvasLayer" node_paths=PackedStringArray("background_music")]
 script = ExtResource("1_uyc4y")
+background_music = NodePath("Music/BackgroundMusic")
 
 [node name="Menu" type="ColorRect" parent="."]
 process_mode = 2
@@ -662,6 +664,11 @@ position = Vector2(160, 521)
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_fud7u")
 autoplay = "default"
+
+[node name="Music" type="Node2D" parent="."]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource("7_owier")
 
 [connection signal="pressed" from="Menu/Container/ButtonNew" to="." method="_on_button_new_pressed"]
 [connection signal="pressed" from="Menu/Container/ButtonLoad" to="." method="_on_button_load_pressed"]
