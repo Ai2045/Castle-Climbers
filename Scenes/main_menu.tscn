@@ -561,10 +561,10 @@ animations = [{
 }]
 
 [node name="MainMenu" type="CanvasLayer"]
-process_mode = 3
 script = ExtResource("1_uyc4y")
 
 [node name="Menu" type="ColorRect" parent="."]
+process_mode = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

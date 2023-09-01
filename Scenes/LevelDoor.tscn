@@ -10,6 +10,27 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5pit0"]
 size = Vector2(50, 54)
 
+[sub_resource type="Animation" id="Animation_33twx"]
+resource_name = "ui_visibility"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/Menu:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gts6a"]
+_data = {
+"ui_visibility": SubResource("Animation_33twx")
+}
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kkw5q"]
 texture = ExtResource("4_2gf3e")
 2:2/0 = 0
@@ -541,27 +562,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="Animation" id="Animation_33twx"]
-resource_name = "ui_visibility"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("UI/Menu:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_gts6a"]
-_data = {
-"ui_visibility": SubResource("Animation_33twx")
-}
-
 [node name="LevelDoor" type="Area2D" node_paths=PackedStringArray("menu", "animation_player", "final_time", "final_score", "final_rating")]
 process_mode = 3
 script = ExtResource("1_dvcm7")
@@ -577,7 +577,14 @@ texture = ExtResource("1_e5rpo")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5pit0")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 3
+libraries = {
+"": SubResource("AnimationLibrary_gts6a")
+}
+
 [node name="UI" type="CanvasLayer" parent="."]
+process_mode = 3
 
 [node name="Menu" type="ColorRect" parent="UI"]
 modulate = Color(1, 1, 1, 0)
@@ -613,7 +620,7 @@ offset_bottom = 119.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("3_h133y")
 theme_override_font_sizes/font_size = 30
-text = "Level Complete!"
+text = "GAME OVER!"
 uppercase = true
 
 [node name="Border" type="ColorRect" parent="UI/Menu/Container"]
@@ -764,20 +771,6 @@ theme_override_fonts/font = ExtResource("3_h133y")
 theme_override_font_sizes/font_size = 20
 text = "0"
 
-[node name="RestartButton" type="Button" parent="UI/Menu/Container"]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 545.0
-offset_top = -205.0
-offset_right = 815.0
-offset_bottom = -115.0
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("3_h133y")
-theme_override_font_sizes/font_size = 25
-text = "Restart"
-
 [node name="ContinueButton" type="Button" parent="UI/Menu/Container"]
 layout_mode = 1
 anchors_preset = 2
@@ -790,7 +783,21 @@ offset_bottom = -115.0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("3_h133y")
 theme_override_font_sizes/font_size = 25
-text = "Continue"
+text = "CONTINUE"
+
+[node name="RestartButton" type="Button" parent="UI/Menu/Container"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 545.0
+offset_top = -205.0
+offset_right = 815.0
+offset_bottom = -115.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_h133y")
+theme_override_font_sizes/font_size = 25
+text = "RESTART"
 
 [node name="TileMap" type="TileMap" parent="UI/Menu"]
 tile_set = SubResource("TileSet_41p21")
@@ -809,12 +816,6 @@ scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_fvmt6")
 autoplay = "default"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-process_mode = 3
-libraries = {
-"": SubResource("AnimationLibrary_gts6a")
-}
-
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="pressed" from="UI/Menu/Container/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="UI/Menu/Container/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="UI/Menu/Container/RestartButton" to="." method="_on_restart_button_pressed"]

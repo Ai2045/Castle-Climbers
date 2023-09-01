@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=3 uid="uid://duomtukxcksgh"]
+[gd_scene load_steps=82 format=3 uid="uid://duomtukxcksgh"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_o4idn"]
 [ext_resource type="Texture2D" uid="uid://1kw8i7c600wg" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Attack (78x58).png" id="2_yd10t"]
@@ -18,6 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://d3uamo8s6lht5" path="res://Assets/clock.png" id="16_5kbek"]
 [ext_resource type="Texture2D" uid="uid://1bdvd6pt2ktd" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Terrain (32x32).png" id="17_fjgdb"]
 [ext_resource type="Texture2D" uid="uid://b7sbeetauvpyt" path="res://Assets/Kings and Pigs/Sprites/06-Pig Hide in the Box/Looking Out (26x20).png" id="18_8hshj"]
+[ext_resource type="Texture2D" uid="uid://cwb88dltum2ut" path="res://Assets/Kings and Pigs/Sprites/08-Box/Idle.png" id="19_2umqa"]
+[ext_resource type="Texture2D" uid="uid://bjshy0q3iqxy6" path="res://Assets/Kings and Pigs/Sprites/09-Bomb/Bomb Off.png" id="20_4gd5m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guxkt"]
 size = Vector2(21, 23)
@@ -870,7 +872,7 @@ animations = [{
 "speed": 11.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast", "score_rayCast", "score_ui", "time_label", "level", "gameOver_menu", "UI", "final_time", "final_score", "final_rating", "pause_menu")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast", "score_rayCast", "score_ui", "time_label", "level", "gameOver_menu", "UI", "final_time", "final_score", "final_rating", "pause_menu", "instructions")]
 script = ExtResource("1_o4idn")
 jump_height = -130
 player_sprite = NodePath("AnimatedSprite2D")
@@ -892,6 +894,7 @@ final_time = NodePath("GameOver/Menu/Container/TimeCompleted/Value")
 final_score = NodePath("GameOver/Menu/Container/Score/Value")
 final_rating = NodePath("GameOver/Menu/Container/Ranking/Value")
 pause_menu = NodePath("PauseMenu")
+instructions = NodePath("Instructions")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 0.5)
@@ -1439,6 +1442,251 @@ collide_with_areas = true
 position = Vector2(-5, 0)
 collide_with_areas = true
 
+[node name="Instructions" type="Popup" parent="."]
+process_mode = 2
+size = Vector2i(1152, 648)
+visible = true
+
+[node name="Menu" type="ColorRect" parent="Instructions"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0627451, 0.101961, 0.34902, 1)
+
+[node name="Container" type="ColorRect" parent="Instructions/Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -496.0
+offset_top = -244.0
+offset_right = 504.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0823529, 0.188235, 0.517647, 1)
+
+[node name="AcceptButton" type="Button" parent="Instructions/Menu/Container"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "X"
+
+[node name="Label" type="Label" parent="Instructions/Menu/Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -230.0
+offset_right = 270.0
+offset_bottom = -197.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 25
+text = "Game Instructions"
+
+[node name="Inputs" type="ColorRect" parent="Instructions/Menu/Container"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Instructions/Menu/Container/Inputs"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = 68.0
+offset_right = 934.0
+offset_bottom = 224.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.709804, 0.709804, 0.709804, 1)
+theme_override_constants/line_spacing = 20
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "- Move the king left & right using your ← → keys
+- Climb ladders by pressing the ↑ key
+- Jump by pressing the “SPACE” key
+- Pause by pressing the “ESC” key It"
+
+[node name="Lives" type="ColorRect" parent="Instructions/Menu/Container"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Lives"]
+position = Vector2(50, 250)
+texture = ExtResource("10_xta6a")
+
+[node name="Label" type="Label" parent="Instructions/Menu/Container/Lives"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = 220.0
+offset_right = 646.0
+offset_bottom = 243.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.709804, 0.709804, 0.709804, 1)
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "- Will restore 1 of your 3 lives"
+
+[node name="Boosts" type="ColorRect" parent="Instructions/Menu/Container"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Boosts"]
+position = Vector2(45, 290)
+texture = ExtResource("13_s3pig")
+
+[node name="Label" type="Label" parent="Instructions/Menu/Container/Boosts"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = 260.0
+offset_right = 754.0
+offset_bottom = 286.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.709804, 0.709804, 0.709804, 1)
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "- Enables “SHIFT” to destroy obstacles"
+
+[node name="Score" type="ColorRect" parent="Instructions/Menu/Container"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Score"]
+position = Vector2(50, 325)
+texture = ExtResource("15_rirmn")
+
+[node name="Label" type="Label" parent="Instructions/Menu/Container/Score"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = 300.0
+offset_right = 664.0
+offset_bottom = 323.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.709804, 0.709804, 0.709804, 1)
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "- Will give you 1000 score points"
+
+[node name="Time" type="ColorRect" parent="Instructions/Menu/Container"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Time"]
+position = Vector2(45, 373)
+scale = Vector2(0.067, 0.067)
+texture = ExtResource("16_5kbek")
+
+[node name="Label" type="Label" parent="Instructions/Menu/Container/Time"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = 340.0
+offset_right = 844.0
+offset_bottom = 363.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.709804, 0.709804, 0.709804, 1)
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "- How long you’ve been in the current level"
+
+[node name="Box" type="ColorRect" parent="Instructions/Menu/Container"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Box"]
+position = Vector2(50, 410)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("19_2umqa")
+
+[node name="Label" type="Label" parent="Instructions/Menu/Container/Box"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = 380.0
+offset_right = 916.0
+offset_bottom = 403.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.709804, 0.709804, 0.709804, 1)
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "- Jump over obstacles to avoid losing 10 points"
+
+[node name="Bomb" type="ColorRect" parent="Instructions/Menu/Container"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Instructions/Menu/Container/Bomb"]
+position = Vector2(50, 445)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("20_4gd5m")
+
+[node name="Label" type="Label" parent="Instructions/Menu/Container/Bomb"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 70.0
+offset_top = 420.0
+offset_right = 934.0
+offset_bottom = 443.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.709804, 0.709804, 0.709804, 1)
+theme_override_fonts/font = ExtResource("11_ffb61")
+theme_override_font_sizes/font_size = 15
+text = "- Jump over obstacles to avoid losing 100 points"
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="pressed" from="GameOver/Menu/Container/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="PauseMenu/Menu/Container/ButtonResume" to="." method="_on_button_resume_pressed"]
@@ -1446,3 +1694,4 @@ collide_with_areas = true
 [connection signal="pressed" from="PauseMenu/Menu/Container/ButtonLoad" to="." method="_on_button_load_pressed"]
 [connection signal="pressed" from="PauseMenu/Menu/Container/ButtonQuit" to="." method="_on_button_quit_pressed"]
 [connection signal="timeout" from="AttackBoostTimer" to="." method="_on_attack_boost_timer_timeout"]
+[connection signal="pressed" from="Instructions/Menu/Container/AcceptButton" to="." method="_on_accept_button_pressed"]

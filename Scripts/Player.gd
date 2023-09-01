@@ -35,11 +35,16 @@ var current_direction = 0
 @export var final_rating: Label
 @export var pause_menu: CanvasLayer
 
+@export var instructions: Popup
 var attack_time_left = 0
 
 var level_start_time = Time.get_ticks_msec()
 
 func _ready():
+	if Global.get_current_level_number() == 1:
+		set_process(false)
+		instructions.show()
+		
 	current_direction = -1
 	attack_time_left = attack_boost_timer.wait_time
 	print(attack_time_left)
@@ -108,6 +113,8 @@ func _input(event):
 		get_tree().paused = true
 		pause_menu.visible = true
 		
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
 	if event.is_action_pressed("ui_attack"):
 		if Global.is_attacking == true:
 			player_sprite.play("attack")
@@ -148,8 +155,17 @@ func _on_animated_sprite_2d_animation_finished():
 		final_time.text = str(Global.final_time)
 		final_score.text = str(Global.final_score)
 		final_rating.text = str(Global.final_rating)
+		
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _process(delta):
+	
+	if get_tree().paused == true:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	elif get_tree().paused == false:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		update_time_label()
+		
 	if velocity.x > 0:
 		current_direction = 1
 	elif velocity.x < 0:
@@ -182,6 +198,8 @@ func _process(delta):
 			
 	update_time_label()
 	update_level_label()
+	
+	
 
 func take_damage():
 	if lives > 0 and Global.can_hurt == true:
@@ -261,7 +279,9 @@ func update_level_label():
 
 
 func _on_restart_button_pressed():
-	get_tree().paused = false
+	if Global.get_current_level_number() > 1:
+		get_tree().paused = false
+		
 	gameOver_menu.visible = false
 	get_tree().reload_current_scene()
 	
@@ -288,3 +308,9 @@ func _on_button_load_pressed():
 
 func _on_button_quit_pressed():
 	get_tree().change_scene_to_file("res://Scenes/Main_Menu.tscn")
+
+
+func _on_accept_button_pressed():
+	instructions.hide()
+	get_tree().paused = false
+	set_process(true)

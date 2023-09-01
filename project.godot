@@ -22,6 +22,7 @@ Global="*res://Scripts/Global.gd"
 [display]
 
 window/size/mode=2
+mouse_cursor/custom_image="res://Assets/Free Basic Cursor Pack/Win95Def.png"
 
 [input]
 

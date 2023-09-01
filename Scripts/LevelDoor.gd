@@ -22,11 +22,9 @@ func _on_body_entered(body):
 		final_time.text = str(Global.final_time)
 		final_score.text = str(Global.final_score)
 		final_rating.text = str(Global.final_rating)
+		
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-func _on_restart_button_pressed():
-	get_tree().paused = false
-	menu.visible = false
-	get_tree().reload_current_scene()
 
 
 func _on_continue_button_pressed():
@@ -37,5 +35,13 @@ func _on_continue_button_pressed():
 	var path = next_level.resource_path
 	var scene_name = path.get_file().split(".")[0]
 	Global.current_scene_name = scene_name
-	print(scene_name)
+
+
+func _on_restart_button_pressed():
+	if Global.get_current_level_number() > 1:
+		get_tree().paused = false
+		
+	menu.visible = false
+	
+	get_tree().reload_current_scene()
 	
