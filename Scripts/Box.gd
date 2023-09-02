@@ -12,6 +12,8 @@ func _on_body_entered(body):
 		
 		if Global.can_hurt == true:
 			body.take_damage()
+			Global.is_climbing = false
+			Global.is_jumping = false
 		
 	if body.name.begins_with("wall"):
 		queue_free()

@@ -1,8 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://dw0ymi478h82j"]
+[gd_scene load_steps=10 format=3 uid="uid://dw0ymi478h82j"]
 
 [ext_resource type="Script" path="res://Scripts/Box.gd" id="1_lkt6o"]
+[ext_resource type="Texture2D" uid="uid://cemaj8suex6by" path="res://Assets/Particles/9/1_9.png" id="2_bq4xw"]
 [ext_resource type="Texture2D" uid="uid://bcb10ey5ggvu2" path="res://Assets/Kings and Pigs/Sprites/08-Box/Hit.png" id="2_gnjhw"]
 [ext_resource type="Texture2D" uid="uid://cwb88dltum2ut" path="res://Assets/Kings and Pigs/Sprites/08-Box/Idle.png" id="3_th0tn"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xxsg5"]
+emission_shape = 3
+emission_box_extents = Vector3(5, 4, 1)
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_max = 1.5
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xgc7m"]
 atlas = ExtResource("2_gnjhw")
@@ -37,6 +47,15 @@ size = Vector2(21, 16)
 [node name="Box" type="Area2D" node_paths=PackedStringArray("animated_sprite")]
 script = ExtResource("1_lkt6o")
 animated_sprite = NodePath("AnimatedSprite2D")
+
+[node name="Effects" type="Node2D" parent="."]
+
+[node name="ThrowingParticle" type="GPUParticles2D" parent="Effects"]
+modulate = Color(1, 1, 1, 0.117647)
+position = Vector2(-10, 0)
+process_material = SubResource("ParticleProcessMaterial_xxsg5")
+texture = ExtResource("2_bq4xw")
+speed_scale = 5.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_go865")

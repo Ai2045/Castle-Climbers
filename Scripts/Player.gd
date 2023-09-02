@@ -48,6 +48,8 @@ var current_direction = 0
 @export var attackSFX: AudioStreamPlayer
 @export var increaseScoreSFX: AudioStreamPlayer
 
+@export var runningParticles: GPUParticles2D
+
 var attack_time_left = 0
 
 var level_start_time = Time.get_ticks_msec()
@@ -65,6 +67,12 @@ func _ready():
 	update_score.connect(score_ui.update_score)
 	health_label.text = str(lives)
 	
+	if Global.get_current_level_number() == 1:
+		set_process(false)
+		instructions.visible = true
+	else:
+		level_start_time = Time.get_ticks_msec()
+		
 	background_music.play()
 	
 func _physics_process(delta):
@@ -112,14 +120,25 @@ func player_animations():
 		player_sprite.flip_h = true
 		player_sprite.play("run")
 		player_collisionShape.position.x = 7
+		score_rayCast.position.x = 5
+		
+		runningParticles.emitting = true
+		runningParticles.process_material.gravity = Vector3(10,0,0)
+		runningParticles.position.x = 5
 		
 	if Input.is_action_pressed("ui_right") && Global.is_jumping == false:
 		player_sprite.flip_h = false
 		player_sprite.play("run")
 		player_collisionShape.position.x = -7
+		score_rayCast.position.x = -5
+		
+		runningParticles.emitting = true
+		runningParticles.process_material.gravity = Vector3(-10,0,0)
+		runningParticles.position.x = -5
 		
 	if !Input.is_anything_pressed():
 		player_sprite.play("idle")
+		runningParticles.emitting = false
 
 func _input(event):
 	
@@ -141,10 +160,12 @@ func _input(event):
 		velocity.y = jump_height
 		player_sprite.play("jump")
 		jumpSFX.play()
+		runningParticles.emitting = true
 		
 	if Global.is_climbing == true:
 		if !Input.is_anything_pressed():
 			player_sprite.play("idle")
+			runningParticles.emitting = false
 			
 		if Input.is_action_pressed("ui_up"):
 			player_sprite.play("climb")
@@ -344,6 +365,8 @@ func _on_button_quit_pressed():
 
 
 func _on_accept_button_pressed():
-	instructions.hide()
+	instructions.visible = false
+	
 	get_tree().paused = false
 	set_process(true)
+	level_start_time = Time.get_ticks_msec()

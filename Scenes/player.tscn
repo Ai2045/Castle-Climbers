@@ -1,6 +1,7 @@
-[gd_scene load_steps=92 format=3 uid="uid://duomtukxcksgh"]
+[gd_scene load_steps=94 format=3 uid="uid://duomtukxcksgh"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_o4idn"]
+[ext_resource type="Texture2D" uid="uid://d16bt2vbp2v0p" path="res://Assets/Particles/9/1_1.png" id="2_gwuvm"]
 [ext_resource type="Texture2D" uid="uid://1kw8i7c600wg" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Attack (78x58).png" id="2_yd10t"]
 [ext_resource type="Texture2D" uid="uid://ggydf13nn61h" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Door In (78x58).png" id="3_4espk"]
 [ext_resource type="Texture2D" uid="uid://sn0upismndmj" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Dead (78x58).png" id="4_u0n8o"]
@@ -33,6 +34,15 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guxkt"]
 size = Vector2(21, 23)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wbgj1"]
+lifetime_randomness = 0.1
+emission_shape = 1
+emission_sphere_radius = 5.0
+particle_flag_disable_z = true
+gravity = Vector3(-10, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_el1w4"]
 atlas = ExtResource("2_yd10t")
@@ -882,7 +892,7 @@ animations = [{
 "speed": 11.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast", "score_rayCast", "score_ui", "time_label", "level", "gameOver_menu", "UI", "final_time", "final_score", "final_rating", "pause_menu", "instructions", "background_music", "pauseMenu_music", "gameOver_music", "jumpSFX", "damageSFX", "healthSFX", "scoreSFX", "boostSFX", "attackSFX", "increaseScoreSFX")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "player_collisionShape", "animation_player", "offset_camera", "health", "health_label", "attack", "attack_boost_timer", "attack_rayCast", "score_rayCast", "score_ui", "time_label", "level", "gameOver_menu", "UI", "final_time", "final_score", "final_rating", "pause_menu", "instructions", "background_music", "pauseMenu_music", "gameOver_music", "jumpSFX", "damageSFX", "healthSFX", "scoreSFX", "boostSFX", "attackSFX", "increaseScoreSFX", "runningParticles")]
 script = ExtResource("1_o4idn")
 jump_height = -130
 player_sprite = NodePath("AnimatedSprite2D")
@@ -915,10 +925,20 @@ scoreSFX = NodePath("Music/ScoreSFX")
 boostSFX = NodePath("Music/BoostSFX")
 attackSFX = NodePath("Music/AttackSFX")
 increaseScoreSFX = NodePath("Music/IncreseScoreSFX")
+runningParticles = NodePath("Effects/RunningParticles")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 0.5)
 shape = SubResource("RectangleShape2D_guxkt")
+
+[node name="Effects" type="Node2D" parent="."]
+
+[node name="RunningParticles" type="GPUParticles2D" parent="Effects"]
+modulate = Color(1, 1, 1, 0.392157)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_wbgj1")
+texture = ExtResource("2_gwuvm")
+speed_scale = 3.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0xd8b")
