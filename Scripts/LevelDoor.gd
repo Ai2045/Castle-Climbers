@@ -26,7 +26,7 @@ func _on_body_entered(body):
 		final_rating.text = str(Global.final_rating)
 		
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		
+
 		levelUp_music.play()
 
 

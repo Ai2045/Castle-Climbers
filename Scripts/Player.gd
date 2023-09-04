@@ -55,10 +55,7 @@ var attack_time_left = 0
 var level_start_time = Time.get_ticks_msec()
 
 func _ready():
-	if Global.get_current_level_number() == 1:
-		set_process(false)
-		instructions.show()
-		
+	
 	current_direction = -1
 	attack_time_left = attack_boost_timer.wait_time
 	print(attack_time_left)
@@ -88,15 +85,19 @@ func _physics_process(delta):
 		attack_time_left = max(0, attack_time_left -1)
 		update_attack_boost.emit(attack_time_left)
 		
-		var target = attack_rayCast.get_collider()
-		if target != null:
-			if target.name == "Box" and Input.is_action_pressed("ui_attack"):
-				Global.disable_spawning()
-				target.queue_free()
-				increase_score(10)
-			if target.name == "Bomb" and Input.is_action_pressed("ui_attack"):         
-				Global.is_bomb_moving = false
-				increase_score(10)
+		if Input.is_action_just_pressed("ui_attack"):
+			var target = attack_rayCast.get_collider()
+			
+			if target != null:
+				if target.name == "Box" :
+					Global.disable_spawning()
+					target.queue_free()
+					increase_score(10)
+					
+				if target.name == "Bomb":         
+					Global.is_bomb_moving = false
+					increase_score(10)
+					
 			Global.can_hurt = false
 		else :
 			Global.can_hurt = true
@@ -123,7 +124,7 @@ func player_animations():
 		score_rayCast.position.x = 5
 		
 		runningParticles.emitting = true
-		runningParticles.process_material.gravity = Vector3(10,0,0)
+		runningParticles.process_material.gravity = Vector3(10,-2,0)
 		runningParticles.position.x = 5
 		
 	if Input.is_action_pressed("ui_right") && Global.is_jumping == false:
@@ -133,7 +134,7 @@ func player_animations():
 		score_rayCast.position.x = -5
 		
 		runningParticles.emitting = true
-		runningParticles.process_material.gravity = Vector3(-10,0,0)
+		runningParticles.process_material.gravity = Vector3(-10,-2,0)
 		runningParticles.position.x = -5
 		
 	if !Input.is_anything_pressed():
@@ -182,7 +183,7 @@ func _input(event):
 func _on_animated_sprite_2d_animation_finished():
 	if attack_time_left <= 0:
 		Global.is_attacking = false
-	Global.is_climbing = false
+		
 	set_physics_process(true)
 	is_hurt = false
 	
@@ -204,12 +205,6 @@ func _on_animated_sprite_2d_animation_finished():
 
 func _process(delta):
 	
-	if get_tree().paused == true:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	elif get_tree().paused == false:
-		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-		update_time_label()
-		
 	if velocity.x > 0:
 		current_direction = 1
 	elif velocity.x < 0:
@@ -240,9 +235,11 @@ func _process(delta):
 			
 		last_direction = current_direction
 			
-	update_time_label()
-	update_level_label()
-	
+	if get_tree().paused == true:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	elif get_tree().paused == false:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		update_time_label()
 	
 
 func take_damage():
@@ -264,8 +261,8 @@ func add_pickup(pickup):
 		if lives < max_lives:
 			lives += 1
 			update_lives.emit(lives, max_lives)
-			healthSFX.play()
-			
+		healthSFX.play()
+		
 	if pickup == Global.Pickups.ATTACK:
 		Global.is_attacking = true
 		boostSFX.play()

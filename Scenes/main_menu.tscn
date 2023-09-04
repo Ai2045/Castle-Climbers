@@ -562,6 +562,7 @@ animations = [{
 }]
 
 [node name="MainMenu" type="CanvasLayer" node_paths=PackedStringArray("background_music")]
+follow_viewport_enabled = true
 script = ExtResource("1_uyc4y")
 background_music = NodePath("Music/BackgroundMusic")
 

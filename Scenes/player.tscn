@@ -1485,7 +1485,6 @@ collide_with_areas = true
 [node name="Instructions" type="Popup" parent="."]
 process_mode = 2
 size = Vector2i(1152, 648)
-visible = true
 
 [node name="Menu" type="ColorRect" parent="Instructions"]
 anchors_preset = 15
