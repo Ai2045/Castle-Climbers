@@ -68,6 +68,7 @@ script = ExtResource("1_aj1w0")
 animated_sprite = NodePath("AnimatedSprite2D")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
 autostart = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

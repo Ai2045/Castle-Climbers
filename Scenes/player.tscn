@@ -206,7 +206,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 7.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -246,7 +246,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"damage",
-"speed": 2.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -902,7 +902,7 @@ offset_camera = NodePath("OffsetCamera")
 health = NodePath("UI/Health")
 health_label = NodePath("UI/Health/Label")
 attack = NodePath("UI/Attack")
-attack_boost_timer = NodePath("AttackBoostTimer")
+attack_boost_timer = NodePath("")
 attack_rayCast = NodePath("AttackRayCast")
 score_rayCast = NodePath("ScoreRayCast")
 score_ui = NodePath("UI/Score")
@@ -942,12 +942,10 @@ speed_scale = 3.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_0xd8b")
-animation = &"idle"
-frame = 10
-frame_progress = 1.0
+animation = &"attack"
 
 [node name="FixedCamera" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
 limit_left = 0
 limit_top = 0
 limit_right = 1152
@@ -1471,11 +1469,8 @@ scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_t8fdc")
 autoplay = "default"
 
-[node name="AttackBoostTimer" type="Timer" parent="."]
-wait_time = 1000.0
-
 [node name="AttackRayCast" type="RayCast2D" parent="."]
-target_position = Vector2(50, 0)
+target_position = Vector2(70, 0)
 collide_with_areas = true
 
 [node name="ScoreRayCast" type="RayCast2D" parent="."]
@@ -1775,5 +1770,4 @@ stream = ExtResource("30_7hh33")
 [connection signal="pressed" from="PauseMenu/Menu/Container/ButtonSave" to="." method="_on_button_save_pressed"]
 [connection signal="pressed" from="PauseMenu/Menu/Container/ButtonLoad" to="." method="_on_button_load_pressed"]
 [connection signal="pressed" from="PauseMenu/Menu/Container/ButtonQuit" to="." method="_on_button_quit_pressed"]
-[connection signal="timeout" from="AttackBoostTimer" to="." method="_on_attack_boost_timer_timeout"]
 [connection signal="pressed" from="Instructions/Menu/Container/AcceptButton" to="." method="_on_accept_button_pressed"]

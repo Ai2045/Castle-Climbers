@@ -49,20 +49,20 @@ var current_direction = 0
 @export var increaseScoreSFX: AudioStreamPlayer
 
 @export var runningParticles: GPUParticles2D
-
 var attack_time_left = 0
-
+var attack_boost_time = 3000
 var level_start_time = Time.get_ticks_msec()
 
 func _ready():
 	
 	current_direction = -1
-	attack_time_left = attack_boost_timer.wait_time
-	print(attack_time_left)
+	attack_time_left = 0
 	update_lives.connect(health.update_lives)
 	update_attack_boost.connect(attack.update_attack_boost)
 	update_score.connect(score_ui.update_score)
+	
 	health_label.text = str(lives)
+	update_level_label()
 	
 	if Global.get_current_level_number() == 1:
 		set_process(false)
@@ -85,22 +85,24 @@ func _physics_process(delta):
 		attack_time_left = max(0, attack_time_left -1)
 		update_attack_boost.emit(attack_time_left)
 		
-		if Input.is_action_just_pressed("ui_attack"):
+		if Input.is_action_just_pressed("ui_attack") :
 			var target = attack_rayCast.get_collider()
 			
 			if target != null:
 				if target.name == "Box" :
 					Global.disable_spawning()
 					target.queue_free()
-					increase_score(10)
+					increase_score(50)
 					
 				if target.name == "Bomb":         
 					Global.is_bomb_moving = false
-					increase_score(10)
+					target.queue_free()
+					increase_score(100)
 					
 			Global.can_hurt = false
 		else :
 			Global.can_hurt = true
+		
 	
 	if Input.is_action_pressed("ui_jump"):
 		var target = score_rayCast.get_collider()
@@ -108,7 +110,14 @@ func _physics_process(delta):
 		if target != null:
 			if target.name == "Box" or target.name == "Bomb":
 				if is_hurt == false:
-					increase_score(1)
+					increase_score(50)
+					
+	
+
+		
+	if lives <= 0:
+		player_sprite.play("death")
+
 
 func horizontal_movement():
 	
@@ -152,7 +161,7 @@ func _input(event):
 		background_music.stop()
 		pauseMenu_music.play()
 		
-	if event.is_action_pressed("ui_attack"):
+	if Input.is_action_pressed("ui_attack"):
 		if Global.is_attacking == true:
 			player_sprite.play("attack")
 			attackSFX.play()
@@ -184,9 +193,6 @@ func _on_animated_sprite_2d_animation_finished():
 	if attack_time_left <= 0:
 		Global.is_attacking = false
 		
-	set_physics_process(true)
-	is_hurt = false
-	
 	if player_sprite.animation == "death":
 		get_tree().paused = true
 		gameOver_menu.visible = true
@@ -194,6 +200,7 @@ func _on_animated_sprite_2d_animation_finished():
 		UI.visible = false
 		final_score_time_and_rating()
 		
+		attack_time_left = 0
 		final_time.text = str(Global.final_time)
 		final_score.text = str(Global.final_score)
 		final_rating.text = str(Global.final_rating)
@@ -202,6 +209,10 @@ func _on_animated_sprite_2d_animation_finished():
 		
 		background_music.stop()
 		gameOver_music.play()
+	set_physics_process(true)
+	is_hurt = false
+	
+	
 
 func _process(delta):
 	
@@ -254,7 +265,9 @@ func take_damage():
 		damageSFX.play()
 		
 	if lives <= 0:
+		set_physics_process(false)
 		player_sprite.play("death")
+		
 
 func add_pickup(pickup):
 	if pickup == Global.Pickups.HEALTH:
@@ -265,6 +278,7 @@ func add_pickup(pickup):
 		
 	if pickup == Global.Pickups.ATTACK:
 		Global.is_attacking = true
+		attack_time_left = attack_boost_time
 		boostSFX.play()
 		
 	if pickup == Global.Pickups.SCORE:
@@ -367,3 +381,4 @@ func _on_accept_button_pressed():
 	get_tree().paused = false
 	set_process(true)
 	level_start_time = Time.get_ticks_msec()
+

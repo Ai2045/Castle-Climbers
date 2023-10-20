@@ -14,8 +14,9 @@ func _physics_process(delta):
 func _on_body_entered(body):
 	if body.name == "Player":
 		sprite_animated.play("explode")
-		timer.start()
 		Global.is_bomb_moving = false
+		timer.start()
+		
 		
 		if Global.can_hurt == true:
 			body.take_damage()
