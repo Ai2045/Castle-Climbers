@@ -117,6 +117,21 @@ func _physics_process(delta):
 		
 	if lives <= 0:
 		player_sprite.play("death")
+		get_tree().paused = true
+		gameOver_menu.visible = true
+		animation_player.play("ui_visibility")
+		UI.visible = false
+		final_score_time_and_rating()
+		
+		attack_time_left = 0
+		final_time.text = str(Global.final_time)
+		final_score.text = str(Global.final_score)
+		final_rating.text = str(Global.final_rating)
+		
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
+		background_music.stop()
+		gameOver_music.play()
 
 
 func horizontal_movement():
@@ -192,23 +207,7 @@ func _input(event):
 func _on_animated_sprite_2d_animation_finished():
 	if attack_time_left <= 0:
 		Global.is_attacking = false
-		
-	if player_sprite.animation == "death":
-		get_tree().paused = true
-		gameOver_menu.visible = true
-		animation_player.play("ui_visibility")
-		UI.visible = false
-		final_score_time_and_rating()
-		
-		attack_time_left = 0
-		final_time.text = str(Global.final_time)
-		final_score.text = str(Global.final_score)
-		final_rating.text = str(Global.final_rating)
-		
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		
-		background_music.stop()
-		gameOver_music.play()
+
 	set_physics_process(true)
 	is_hurt = false
 	
@@ -331,11 +330,12 @@ func update_time_label():
 	time_label.text = str(round(time_passed)) + "s"
 	
 func update_level_label():
-	var current_level = Global.get_current_level_number()
-	if current_level != -1:
-		level.text = " " + str(current_level)
+	
+	print(Global.current_scene_name)
+	if(Global.current_difficolt == 1):
+		level.text = str(" simple")
 	else:
-		level.text = "err"
+		level.text = str(" difficolt") 
 
 
 func _on_restart_button_pressed():

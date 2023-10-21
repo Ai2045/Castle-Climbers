@@ -14,7 +14,7 @@ func _on_button_new_pressed():
 	if current_scene:
 		current_scene.queue_free()
 	
-	var new_scene = load("res://Scenes/Main.tscn").instantiate()
+	var new_scene = load("res://Scenes/select_menu.tscn").instantiate()
 	get_tree().root.add_child(new_scene)
 	get_tree().set_current_scene(new_scene)
 	Global.current_scene_name = new_scene.name

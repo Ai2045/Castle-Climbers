@@ -1,7 +1,8 @@
-[gd_scene load_steps=34 format=3 uid="uid://bfl5lh6et551m"]
+[gd_scene load_steps=35 format=3 uid="uid://bfl5lh6et551m"]
 
 [ext_resource type="Script" path="res://Scripts/LevelDoor.gd" id="1_dvcm7"]
 [ext_resource type="Texture2D" uid="uid://bll5xyyku7qqn" path="res://Assets/Kings and Pigs/Sprites/11-Door/Idle.png" id="1_e5rpo"]
+[ext_resource type="PackedScene" uid="uid://dngaglanakpbh" path="res://Scenes/select_menu.tscn" id="2_8da6f"]
 [ext_resource type="FontFile" uid="uid://6t41kx6p1hri" path="res://Assets/Font/QuinqueFive.otf" id="3_h133y"]
 [ext_resource type="Texture2D" uid="uid://1bdvd6pt2ktd" path="res://Assets/Kings and Pigs/Sprites/14-TileSets/Terrain (32x32).png" id="4_2gf3e"]
 [ext_resource type="Texture2D" uid="uid://di3ywju7v02i2" path="res://Assets/Kings and Pigs/Sprites/04-Pig Throwing a Box/Idle (26x30).png" id="5_n4wk2"]
@@ -568,6 +569,7 @@ process_mode = 3
 script = ExtResource("1_dvcm7")
 menu = NodePath("UI/Menu")
 animation_player = NodePath("AnimationPlayer")
+next_level = ExtResource("2_8da6f")
 final_time = NodePath("UI/Menu/Container/TimeCompleted/Value")
 final_score = NodePath("UI/Menu/Container/Score/Value")
 final_rating = NodePath("UI/Menu/Container/Ranking/Value")
@@ -622,7 +624,7 @@ offset_bottom = 119.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("3_h133y")
 theme_override_font_sizes/font_size = 30
-text = "GAME OVER!"
+text = "CONGRATULATION!"
 uppercase = true
 
 [node name="Border" type="ColorRect" parent="UI/Menu/Container"]

@@ -1475,6 +1475,7 @@ collide_with_areas = true
 
 [node name="ScoreRayCast" type="RayCast2D" parent="."]
 position = Vector2(-5, 0)
+collision_mask = 2
 collide_with_areas = true
 
 [node name="Instructions" type="Popup" parent="."]

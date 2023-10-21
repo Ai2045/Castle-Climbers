@@ -65,10 +65,12 @@ func clean_scene_name(scene_name):
 		return scene_name
 		
 func get_current_level_number():
-	if current_scene_name == "Main" || current_scene_name == "MainMenu":
+	if current_scene_name == "Main" || current_scene_name == "MainMenu" || current_scene_name == "select_menu":
 		return 1
 	elif current_scene_name.begins_with("Main_"):
 		var level_number = current_scene_name.get_slice("_", 1).to_int()
 		return level_number
 	else :
 		return -1
+
+var current_difficolt = 0
